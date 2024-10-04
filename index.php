@@ -35,7 +35,7 @@
     <!-- Custom styles for this template -->
     <link href="carousel.css" rel="stylesheet">
   </head>
-<body>
+  <body>
     
 <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -209,6 +209,6 @@
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
-
-</body>
+      
+  </body>
 </html>
