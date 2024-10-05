@@ -1,0 +1,38 @@
+*,
+html{
+    margin: 0;
+    padding: 0;
+}
+
+
+.navigation-container {
+    width: 100%;
+    height: 10vh;
+}
+
+.ul-navbar{
+    background-color: white;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.li-navbar {
+    padding: 10px;
+    list-style: none;
+    margin: 5px;
+    font-size: 18px;
+}
+
+.li-navbar:hover{
+    transition: .2s ease-in-out;
+    transition-delay: .3s;
+    border-radius: 10px;
+}
+
+.a-navbar {
+    color: black;
+    text-decoration: none;
+    font-weight: 700;
+}
