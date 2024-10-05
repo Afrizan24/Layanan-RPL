@@ -141,14 +141,7 @@
   <!-- Wrap the rest of the page in another container to center all the content. -->
 
   <div class="container marketing">
-
-   
-
-
     <!-- START THE FEATURETTES -->
-
- 
-
     <div class="row featurette">
       <div class="col-md-7">
         <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
