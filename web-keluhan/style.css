@@ -1,0 +1,142 @@
+/* Navbar Styling */
+.logo-img {
+    width: 50px;
+    height: 50px;
+}
+
+.navbar {
+    border-top: 5px solid #990099; /* Warna ungu sesuai gambar */
+}
+
+.navbar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: #6c757d; /* Warna subtitle lebih lembut */
+}
+
+.nav-link {
+    margin-right: 20px;
+    font-weight: 400; /* Mengurangi ketebalan font */
+    font-size: 16px;
+    color: #000; /* Warna default */
+    transition: color 0.3s ease; /* Animasi smooth untuk perubahan warna */
+}
+
+/* Navbar Link Effects */
+.nav-link:hover {
+    color: #484849; /* Warna berubah saat di-hover */
+}
+
+.nav-link:active {
+    color: #353434; /* Warna saat ditekan */
+}
+
+.nav-link.active {
+    color: #353434; /* Warna link aktif */
+    font-weight: bold; /* Lebih tebal untuk item yang aktif */
+}
+
+.navbar-nav .nav-item:last-child .nav-link {
+    margin-right: 0; /* Hilangkan margin di link terakhir */
+}
+
+/* Icon Profile Styling */
+.bi-person-circle {
+    color: #333;
+}
+
+/* General Body Styling */
+body {
+    font-family: 'Merriweather', serif;
+}
+
+/* About Section Styling */
+.about-section {
+    padding: 60px 0;
+    text-align: center;
+}
+
+h2 {
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+p {
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+/* Services Section Styling */
+.services-section {
+    padding: 50px 0;
+}
+
+.services-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.services-subtitle {
+    font-size: 18px;
+    color: #050505;
+}
+
+.services-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+}
+
+.services-content p {
+    font-size: 14px;
+    color: #000;
+}
+
+/* Hover Effect for Services Content */
+.services-content:hover {
+    transform: translateY(-10px);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Image Styling */
+img.img-fluid {
+    transition: transform 0.3s ease;
+}
+
+img.img-fluid:hover {
+    transform: scale(1.05);
+}
+
+/* Footer Styling */
+.footer {
+    background-color: #fff9ae; /* Warna kuning lembut */
+    color: #333; /* Warna teks yang lebih gelap */
+    font-size: 14px;
+    border-top: 1px solid #eee; /* Garis tipis di bagian atas footer */
+}
+
+.footer a {
+    color: #333; /* Warna link yang serasi */
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Memberikan underline saat hover */
+}
+
+/* Card Styling (Optional for Reusability) */
+.card {
+    border: none;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
