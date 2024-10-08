@@ -1,0 +1,150 @@
+.navbar-brand img {
+    height: 40px; 
+  }
+  .navbar-nav .nav-link {
+    margin-right: 15px;
+   
+  }
+  .customnav{
+    background-color: rgb(245, 245, 247, 0.4);
+  }
+  .social-icons a {
+    color: #000;
+    margin-left: 10px;
+  }
+  .navbar-text {
+    display: inline-flex;
+    align-items: center;
+    
+  }
+
+  body {
+    overflow: awto;
+    font-family: Arial, sans-serif;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-x: hidden;
+    background-image:url('img/blur.png');
+    
+  }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: auto; 
+  }
+
+  /* laporan  */
+ .complaint-form-section {
+      padding: 20px 10px;
+      /* background-color: white;  */
+      background-image:url('img/blur.png');
+    }
+    #complaint{
+        background-color: rgba(226, 240, 213, 0.8);
+        box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.2);
+        border-box : black;
+        border: 1px solid #ccc;
+    }
+    .container-custom {
+        width: 100%; 
+        max-width: 1200px; 
+        height: auto; 
+        min-height: 500px; 
+        border-radius: 10px;
+        background-color: rgba(226, 240, 213, 0.8);
+        padding: 70px;
+        box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.2);
+        margin: 0 auto;
+      }
+      .container {
+        max-width: 1100px; 
+      }
+    .form-title {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #555;
+      
+    }
+    .btn-submit {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    .animated-button {
+        background-color:  #333; 
+        width: 100%; 
+        max-width: 1200px; 
+        color: white; 
+        border: 2px solid transparent; 
+        padding: 10px 20px; 
+        border-radius: 5px; 
+        text-align: center;
+        font-size: 16px; 
+        cursor: pointer; 
+        transition: all 0.3s ease; 
+        display : inline-block;
+    }
+    .animated-button:hover {
+        background-color: white; 
+        color:  #333; 
+        border: 2px solid  #333;
+        transform: scale(1.05); 
+    }
+    .form-side-image img {
+      max-width: 100%;
+      height: auto;
+    }
+
+
+
+
+
+    /* layanan  */
+    .services-section {
+      padding: 60px 0;
+    }
+    .services-title {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .image-kanan {
+      padding-right: 0;
+    }
+    .image-kiri{
+      padding-left: 0;
+    }
+    .text-side {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .text-content {
+      max-width: 600px;
+    }
+    .carousel-inner{
+      max-height: 400px;
+      max-width: awto;
+      border-radius: 2%;
+    }
+
+
+
+
+
+
+
+    @media (max-width: 767px) {
+      .form-side-image img {
+          display: none; 
+      }
+  }
+
+    /* Adjust form and image size on larger screens */
+    @media (min-width: 768px) {
+      .form-side-image {
+        padding-left: 40px;
+      }
+    }

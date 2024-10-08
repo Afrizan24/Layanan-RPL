@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Ngeluh Mulu Pantek</title>
+    <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="src/shit.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="vh-100 overflow-hidden">
+    <!-- navbar  -->
+    <nav class="navbar navbar-expand-lg navbar-light customnav sticky-top">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <img src="/src/img/Polnes.png" alt="Logo"> 
+            <span>TI</span>
+            <small>Layanan Keluhan</small>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="Beranda.html">Beranda</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="layanan.html">Layanan</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="laporan.html">Laporkan</a>
+              </li>
+            </ul>
+            <span class="navbar-text"><a href="login.html">
+              <button type="submit" class="animated-button"> Log-In </button>
+            </a>
+              <div class="social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-messenger"></i></a>
+                <a href="#"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </span>
+          </div>
+        </div>
+      </nav>
+
+<!-- laporan -->
+<section class="complaint-form-section">
+    <div class="container-custom">
+      <div class="row align-items-center">
+        <!-- Form -->
+        <div class="col-lg-6 col-md-6">
+          <h2 class="form-title">Formulir Keluhan</h2>
+          <form>
+            <div class="mb-3">
+              <label for="complaint" class="form-label">Pilih Keluhan</label>
+              <select class="form-select" id="complaint" required>
+                <option selected>Pilih Keluhan</option>
+                <option value="1">Keluhan 1</option>
+                <option value="2">Keluhan 2</option>
+                <option value="3">Keluhan 3</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="location" class="form-label">Lokasi (Optional)</label>
+              <input type="text" class="form-control" id="complaint" placeholder="Lokasi">
+            </div>
+
+            <div class="mb-3">
+              <label for="date" class="form-label">Tanggal</label>
+              <div class="d-flex">
+                <select class="form-select me-2" id="complaint" required>
+                  <option selected>Month</option>
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                 
+                </select>
+                <select class="form-select me-2" id="complaint" required>
+                  <option selected>Day</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  
+                </select>
+                <select class="form-select" id="complaint" required>
+                  <option selected>Year</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                 
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">Deskripsi *</label>
+              <textarea class="form-control" id="complaint" rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="animated-button">Send</button>
+          </form>
+        </div>
+
+   
+        <div class="col-lg-6 col-md-6 form-side-image">
+          <img src="/src/img/WIN_20240622_12_17_35_Pro.jpg" alt="Side Image"> 
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</html>
