@@ -1,30 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+*{
+    /* font-family: 'Poppins', sans-serif; */
+    font-family: 'Playfair Display', serif;
+}
+
+
+
 .navbar-brand img {
     height: 40px; 
   }
   .navbar-nav .nav-link {
     margin-right: 15px;
+    font-family: 'Playfair Display', serif;
    
   }
   .customnav{
-    background-color: rgb(245, 245, 247, 0.4);
+    background-color: rgb(244, 246, 255, 0.8);
+    font-family: 'Playfair Display', serif;
   }
   .social-icons a {
-    color: #000;
+    color: #fff;
     margin-left: 10px;
   }
   .navbar-text {
     display: inline-flex;
     align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    text-weight: bold;
     
   }
 
   body {
     overflow: awto;
-    font-family: Arial, sans-serif;
     flex-direction: column;
     justify-content: space-between;
+    font-family: 'Playfair Display', serif;
     overflow-x: hidden;
-    background-image:url('img/blur.png');
+    /* background-image:url('img/blur.png'); */
+  background: #2c3e50; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #2c3e50, #3498db); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #2c3e50, #3498db); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     
   }
   
@@ -32,17 +50,20 @@
     height: 100%;
     margin: 0;
     overflow: auto; 
+    font-family: 'Playfair Display', serif;
   }
 
   /* laporan  */
  .complaint-form-section {
       padding: 20px 10px;
+      font-family: 'Playfair Display', serif;
       /* background-color: white;  */
-      background-image:url('img/blur.png');
+      /* background-image:url('img/blur.png'); */
     }
     #complaint{
-        background-color: rgba(226, 240, 213, 0.8);
+        background-color: rgb(244, 246, 255, 0.3);
         box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.2);
+        font-family: 'Playfair Display', serif;
         border-box : black;
         border: 1px solid #ccc;
     }
@@ -52,18 +73,34 @@
         height: auto; 
         min-height: 500px; 
         border-radius: 10px;
-        background-color: rgba(226, 240, 213, 0.8);
+        background-color: rgb(244, 246, 255, 0.6);
         padding: 70px;
         box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.2);
+        font-family: 'Playfair Display', serif;
+        margin: 0 auto;
+      }
+    .container-custom-1 {
+        width: 100%; 
+        max-width: 1400px; 
+        height: auto; 
+        min-height: 50px; 
+        border-radius: 10px;
+        background-color: rgb(244, 246, 255, 0.8);
+        padding: 90px;
+        box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.2);
+        font-family: 'Playfair Display', serif;
         margin: 0 auto;
       }
       .container {
         max-width: 1100px; 
+        font-family: 'Playfair Display', serif;
+        color: white;
       }
     .form-title {
       font-size: 2rem;
       margin-bottom: 20px;
-      color: #555;
+      color: rgba(0,0,0, 0.8);
+      font-family: 'Playfair Display', serif;
       
     }
     .btn-submit {
@@ -72,9 +109,10 @@
       border: none;
       padding: 10px 20px;
       cursor: pointer;
+      font-family: 'Playfair Display', serif;
     }
     .animated-button {
-        background-color:  #333; 
+        background-color:  rgba(0,0,0, 0.8); 
         width: 100%; 
         max-width: 1200px; 
         color: white; 
@@ -84,14 +122,16 @@
         text-align: center;
         font-size: 16px; 
         cursor: pointer; 
+        font-family: 'Playfair Display', serif;
         transition: all 0.3s ease; 
         display : inline-block;
     }
     .animated-button:hover {
         background-color: white; 
-        color:  #333; 
+        color:  black; 
         border: 2px solid  #333;
         transform: scale(1.05); 
+        font-family: 'Playfair Display', serif;
     }
     .form-side-image img {
       max-width: 100%;
@@ -105,10 +145,14 @@
     /* layanan  */
     .services-section {
       padding: 60px 0;
+      /* color : #fff; */
+      font-family: 'Playfair Display', serif;
     }
     .services-title {
       text-align: center;
       margin-bottom: 80px;
+      color: #fff;
+      font-family: 'Playfair Display', serif;
     }
     .image-kanan {
       padding-right: 0;
@@ -119,10 +163,12 @@
     .text-side {
       display: flex;
       justify-content: center;
+      font-family: 'Playfair Display', serif;
       align-items: center;
     }
     .text-content {
       max-width: 600px;
+      font-family: 'Playfair Display', serif;
     }
     .carousel-inner{
       max-height: 400px;
@@ -131,7 +177,19 @@
     }
 
 
-
+    /* beranda  */
+    .card {
+      background-color: rgb(244, 246, 255, 0.1);
+      border: none;
+      font-family: 'Playfair Display', serif;
+      color: black;
+    }
+    .card-body{
+      flex: 1 1 auto;
+      font-family: 'Playfair Display', serif;
+      background-color: rgb(244, 246, 255, 0.1);
+    }
+  
 
 
 
