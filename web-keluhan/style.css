@@ -1,3 +1,10 @@
+/* font  */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
+
 /* Navbar Styling */
 .logo-img {
     width: 50px;
@@ -115,14 +122,14 @@ img.img-fluid:hover {
 
 /* Footer Styling */
 .footer {
-    background-color: #fff9ae; /* Warna kuning lembut */
-    color: #333; /* Warna teks yang lebih gelap */
+    background-color: white; /* Warna kuning lembut */
+    color: white; /* Warna teks yang lebih gelap */
     font-size: 14px;
     border-top: 1px solid #eee; /* Garis tipis di bagian atas footer */
 }
 
 .footer a {
-    color: #333; /* Warna link yang serasi */
+    color: white; /* Warna link yang serasi */
     text-decoration: none;
 }
 
