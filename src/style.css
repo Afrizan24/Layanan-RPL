@@ -6,7 +6,10 @@
 }
 .wrapper{
     /* background-color: white ; */
-    background-image: url('img/blur.png');
+    /* background-image: url('img/blur.png'); */
+    background: #8e9eab;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     padding: 0 20px 0 20px;
 }
 .main{
@@ -16,19 +19,23 @@
     min-height: 100vh;
 }
 .side-image{
-    /* background-image: url("img/rio.jpg"); */
-    background-color: #A1CCD1 ;
+    background-image: url("img/tiHima.png");
+    background-color: rgb(244, 246, 255, 0.3);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    background-size: contain;
     border-radius: 10px 0 0 10px;
     position: relative;
+    width: awto; /* Gambar akan mengikuti lebar kontainernya */
+    height: auto; /* Proporsional */
+  
 }
 .row{
   width:  900px;
   height:550px;
   border-radius: 10px;
-  background-color: rgba(226, 240, 213, 0.5);
+  background-color: rgb(244, 246, 255, 0.3);
   
   padding: 0px;
   box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
@@ -140,6 +147,7 @@ span a:hover{
     }
     img{
         width: 35px;
+        display: none;
         position: absolute;
         top: 20px;
         left: 47%;
@@ -157,3 +165,7 @@ span a:hover{
         width: 100%;
     }
 }
+
+
+
+
