@@ -19,16 +19,16 @@
     min-height: 100vh;
 }
 .side-image{
-    background-image: url("img/tiHima.png");
+    background-image: url("img/LogoTi.png");
     background-color: rgb(244, 246, 255, 0.3);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 30%;
     border-radius: 10px 0 0 10px;
     position: relative;
-    width: awto; /* Gambar akan mengikuti lebar kontainernya */
-    height: auto; /* Proporsional */
+    width: awto; 
+    height: auto; 
   
 }
 .row{
@@ -144,6 +144,8 @@ span a:hover{
 @media only screen and (max-width: 768px){
     .side-image{
         border-radius: 10px 10px 0 0;
+        background-size: 5%
+        background-position: center;
     }
     img{
         width: 35px;
