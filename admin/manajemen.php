@@ -37,7 +37,6 @@
                     <tr>
                         <th>NIM</th>
                         <th>Nama</th>
-                        <th>Username</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -45,7 +44,6 @@
                     <tr>
                         <td>123456789</td>
                         <td>IPUL GAY</td>
-                        <td>JOMOK</td>
                         <td>
                             <a href="#" class="btn btn-primary btn-sm">Edit</a>
                             <a href="#" class="btn btn-danger btn-sm">Hapus</a>

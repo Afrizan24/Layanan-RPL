@@ -14,5 +14,5 @@ if (!$koneksi) {
 }
 
 // Jika koneksi berhasil
-echo "Koneksi ke database berhasil";
+/* echo "Koneksi ke database berhasil"; */
 ?>

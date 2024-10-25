@@ -1,3 +1,18 @@
+<?php
+include '../koneksi.php'; // Memasukkan file koneksi
+
+$sql = "SELECT keluhan.*, kategori_keluhan.nama_kategori AS nama_kategori
+        FROM keluhan
+        LEFT JOIN kategori_keluhan ON keluhan.id_kategori_keluhan = kategori_keluhan.id_kategori_keluhan";
+
+$stmt = $koneksi->prepare($sql);
+
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,33 +50,36 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>NIM</th>
-                        <th>Kategori</th>
-                        <th>Deskipsi</th>
+                        <th>Kategori Keluhan</th>
+                        <th>Deskripsi</th>
                         <th>Lokasi</th>
                         <th>Status</th>
                         <th>Tanggapan</th>
-                        <th>Tanggal Keluhan</th>
-                        <th>Aksi</th>
+                        <th>Waktu</th>
+                        <th>APALAH</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>23423423</td>
-                        <td>IPUL GAY</td>
-                        <td>JOMOK</td>
-                        <td>Samarinda</td>
-                        <td>
-                            <a href="#" class="btn btn-primary btn-sm">Terima</a>
-                            <a href="#" class="btn btn-danger btn-sm">Tolak</a>
-                        </td>
-                        <td>Awododkwok</td>
-                        <td>23-09-2077</td>
-                        <td>
+                    <?php $i = 1 ?>
+                         <?php foreach($result as $o){?>
+                                <td> <?= $i; ?></td>
+                                <td><?=$o["Nim"]?></td>
+                                <td><?=$o["nama_kategori"]?></td>
+                                <td><?=$o["deskripsi"]?></td>
+                                <td><?=$o["lokasi"]?></td>
+                                <td><?=$o["status"]?></td>
+                                <td><?=$o["tanggapan"]?></td>
+                                <td><?=$o["tgl_keluhan"]?></td>
+                                <td>
                             <a href="#" class="btn btn-primary btn-sm">Edit</a>
                             <a href="#" class="btn btn-danger btn-sm">Hapus</a>
                         </td>
                     </tr>
+                    <?php $i++; ?>
+                    <?php }?>
                     <!-- Tambahkan data mahasiswa lainnya di sini -->
                 </tbody>
             </table>

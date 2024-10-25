@@ -12,9 +12,56 @@
     <link rel="stylesheet" href="src/shit.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* CSS untuk modal */
+        .modal {
+            display: none; /* Sembunyikan modal secara default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body class="vh-100 ">
+<?php
+session_start();
+if (isset($_SESSION['message'])) {
+    echo '<div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p style="font-size: 18px; margin: 0;">Laporan berhasil terkirim!</p> <!-- Pesan yang ditampilkan -->
+            </div>
+          </div>';
+    unset($_SESSION['message']); // Hapus pesan setelah ditampilkan
+}
+?>
     <!-- navbar  -->
     <nav class="navbar navbar-expand-lg navbar-light customnav sticky-top">
         <div class="container">
@@ -35,14 +82,13 @@
                 <a class="nav-link" href="beranda.php">Beranda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="beranda.php?p=layanan">Layanan</a>
+                <a class="nav-link" href="beranda.php?p=layanan#Layanan">Layanan</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="beranda.php?p=laporan">Laporkan</a>
+                <a class="nav-link" href="beranda.php?p=laporan#isiLaporan">Laporkan</a>
               </li>
             </ul>
             <?php
-                       session_start();
                        if (isset($_SESSION['username'])) {
                            echo '<form action="proses_mhs/logout.php" method="POST">
                                    <input type="submit" class="animated-button" value="Logout">
@@ -82,64 +128,40 @@
         </form>
       </div>
       <div class="col-lg-6 col-md-6 form-side-image">
-        <img src="src/img/rio.jpg" alt="Side Image"> 
+        <img src="src\img\LogoTI.png" alt="Side Image"> 
       </div>
     </div>
   </div>
-</section>
+</section>    
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash) {
+                const element = document.getElementById(window.location.hash.substring(1));
+                if (element) {
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const offset = 20;
+                    const elementPosition = element.getBoundingClientRect().top + window.scrollY - navbarHeight - offset;
 
-<!-- tampilan service  -->
+                    window.scrollTo({
+                        top: elementPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
 
- <section class="services-section container">
-  <div class="services-title">
-    <h1>Layanan</h1>
-    <p class="service-title">Setiap keluhan yang Anda laporkan akan kami tanggapi dengan serius, dan kami berkomitmen untuk memberikan solusi secepat mungkin. Bersama-sama, mari kita ciptakan lingkungan kampus yang nyaman, efisien, dan menyenangkan untuk belajar.</p>
-</div>
-    <div class="row">
+        function scrollToElement(id) {
+            const element = document.getElementById(id);
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            const offset = 20;
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY - navbarHeight - offset;
 
-    <!-- Card 1 -->
-    <div class=" col-md-6 col-lg-4 mb-4">
-      <div class="card h-100 d-flex flex-column">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Keluhan Fasilitas</h5>
-          <p class="card-text">Di bagian ini, mahasiswa dapat menyampaikan keluhan terkait kondisi fasilitas kampus, seperti ruang kelas, laboratorium, perpustakaan, fasilitas kelas seperti AC, dan area umum lainnya. Apakah ada fasilitas yang kurang memadai, tidak terawat, atau tidak berfungsi dengan baik? Kami ingin mendengar pengalaman Anda agar dapat meningkatkan kenyamanan dan aksesibilitas fasilitas yang ada.</p>
-          <div class="mt-auto"><a href="laporan.html">
-            <button type="submit" class="animated-button w-100">Laporkan</button>
-          </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Card 2 -->
-    <div class="col-md-6 col-lg-4 mb-4">
-      <div class="card h-100 d-flex flex-column">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Keluhan SDA</h5>
-          <p class="card-text">Bagian ini memberikan kesempatan bagi mahasiswa untuk menyampaikan pendapat mengenai pelayanan dari dosen, staf administrasi, maupun petugas kebersihan. Apakah Anda mengalami kendala dalam berinteraksi dengan pihak kampus? Atau mungkin ada saran untuk meningkatkan kualitas layanan dari sumber daya manusia? Setiap masukan akan membantu kami memastikan bahwa semua pihak di kampus berkontribusi secara optimal terhadap pengalaman mahasiswa.</p>
-          <div class="mt-auto"><a href="laporan.html">
-            <button type="submit" class="animated-button w-100">Laporkan</button>
-          </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Card 3 -->
-    <div class="col-md-6 col-lg-4 mb-4">
-      <div class="card h-100 d-flex flex-column">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Keluhan KBM</h5>
-          <p class="card-text">Kegiatan belajar mengajar adalah inti dari pengalaman akademis. Di sini, mahasiswa dapat memberikan masukan mengenai metode pengajaran, kurikulum, atau interaksi dengan dosen. Apakah Anda merasa kurang puas dengan materi yang diajarkan? Atau mungkin ada metode pengajaran yang perlu ditingkatkan? Umpan balik Anda sangat penting untuk menciptakan pengalaman belajar yang lebih baik dan efektif.</p>
-          <div class="mt-auto"><a href="laporan.html">
-            <button type="submit" class="animated-button w-100">Laporkan</button>
-          </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-
+            window.scrollTo({
+                top: elementPosition,
+                behavior: 'smooth'
+            });
+        }
+    </script>
   
 </div>
 </section>
@@ -166,7 +188,6 @@
     <div class="services-title">
       <h1>Tentang Kami</h1>
       <p>
-        Tentang Kami
         Selamat datang di SUMA, platform yang didedikasikan untuk mendengar dan merespons suara mahasiswa. Kami percaya bahwa setiap mahasiswa berhak memiliki pengalaman belajar yang optimal dan menyenangkan.
         
         Di [Nama Website], kami menyediakan ruang bagi mahasiswa untuk menyampaikan keluhan dan saran mengenai berbagai aspek kehidupan kampus, termasuk Fasilitas, Kegiatan Belajar Mengajar, danSumber Daya Manusia
@@ -190,6 +211,24 @@
 </footer>
 
 
+<script>
+    // Modal script
+    var modal = document.getElementById("myModal");
+    if (modal) {
+        modal.style.display = "block"; // Tampilkan modal
+
+        var span = document.getElementsByClassName("close")[0];
+        span.onclick = function() {
+            modal.style.display = "none"; // Tutup modal saat klik 'x'
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none"; // Tutup modal saat klik di luar
+            }
+        }
+    }
+    
+</script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="boostrap/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
