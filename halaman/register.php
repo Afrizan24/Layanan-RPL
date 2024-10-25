@@ -26,8 +26,12 @@
                     
                 <div class="input-box">
     <header>Register Dulu Le</header>
-    <div class="input-field">
-        <form action="../proses_mhs/register.php" method="POST">
+    <form action="../proses_mhs/register.php" method="POST">
+        <div class="input-field">
+            <input type="text" class="input" id="username" name="Nim" required="" autocomplete="off">
+            <label for="username">Nim</label> 
+        </div> 
+        <div class="input-field">
             <input type="text" class="input" id="username" name="username" required="" autocomplete="off">
             <label for="username">Username</label> 
         </div> 

@@ -39,7 +39,6 @@ if ($stmt) {
             <h4 class="text-white">Menu</h4>
             <a href="indexadmin.php" class="nav-link">Dashboard</a>
             <a href="manajemen.php" class="nav-link">Manajemen Mahasiswa</a>
-            <a href="kategori.php" class="nav-link">Kategori Keluhan</a>
             <a href="keluhan.php" class="nav-link">Daftar Keluhan</a>
             <a href="logout.php" class="nav-link">Logout</a>
         </div>
@@ -52,6 +51,7 @@ if ($stmt) {
                     <tr>
                         <th>No</th>
                         <th>NIM</th>
+                        <th>Nama</th>
                         <th>Kategori Keluhan</th>
                         <th>Deskripsi</th>
                         <th>Lokasi</th>
@@ -67,6 +67,7 @@ if ($stmt) {
                          <?php foreach($result as $o){?>
                                 <td> <?= $i; ?></td>
                                 <td><?=$o["Nim"]?></td>
+                                <td><?=$o["nama"]?></td>
                                 <td><?=$o["nama_kategori"]?></td>
                                 <td><?=$o["deskripsi"]?></td>
                                 <td><?=$o["lokasi"]?></td>
@@ -83,7 +84,10 @@ if ($stmt) {
                     <!-- Tambahkan data mahasiswa lainnya di sini -->
                 </tbody>
             </table>
-            <a href="#" class="btn btn-success">Tambah Kategori</a>
+            <div class="mb-3">
+                 <label for="" class="form-label">Cari Mahasiswa</label>
+                 <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
+            </div>
         </div>
     </div>
 

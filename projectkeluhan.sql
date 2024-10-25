@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2024 at 03:57 PM
+-- Generation Time: Oct 25, 2024 at 10:21 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -52,7 +52,7 @@ CREATE TABLE `kategori_keluhan` (
 
 CREATE TABLE `keluhan` (
   `id_keluhan` int(30) NOT NULL,
-  `Nim` int(30) DEFAULT NULL,
+  `id_mhs` int(30) DEFAULT NULL,
   `id_kategori_keluhan` int(30) DEFAULT NULL,
   `deskripsi` text DEFAULT NULL,
   `lokasi` varchar(100) DEFAULT NULL,
@@ -61,6 +61,13 @@ CREATE TABLE `keluhan` (
   `tgl_keluhan` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `keluhan`
+--
+
+INSERT INTO `keluhan` (`id_keluhan`, `id_mhs`, `id_kategori_keluhan`, `deskripsi`, `lokasi`, `status`, `tanggapan`, `tgl_keluhan`) VALUES
+(0, 0, 2, 'xzcsa\r\n\r\n\r\n\r\nas\r\n', '', 'proses', '', '2024-10-10');
+
 -- --------------------------------------------------------
 
 --
@@ -68,11 +75,19 @@ CREATE TABLE `keluhan` (
 --
 
 CREATE TABLE `mahasiswa` (
+  `id_mhs` int(50) NOT NULL,
   `Nim` int(30) NOT NULL,
   `Nama` varchar(100) DEFAULT NULL,
   `username` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `mahasiswa`
+--
+
+INSERT INTO `mahasiswa` (`id_mhs`, `Nim`, `Nama`, `username`, `password`) VALUES
+(1, 0, NULL, NULL, '$2y$10$sPxPxcnAb/hmEipfVBBipu244dU1nrQC3ean4fISp7AfM9aBo1NKS');
 
 --
 -- Indexes for dumped tables
@@ -95,14 +110,24 @@ ALTER TABLE `kategori_keluhan`
 --
 ALTER TABLE `keluhan`
   ADD PRIMARY KEY (`id_keluhan`),
-  ADD KEY `Nim` (`Nim`),
+  ADD KEY `Nim` (`id_mhs`),
   ADD KEY `id_kategori_keluhan` (`id_kategori_keluhan`);
 
 --
 -- Indexes for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  ADD PRIMARY KEY (`Nim`);
+  ADD PRIMARY KEY (`id_mhs`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `mahasiswa`
+--
+ALTER TABLE `mahasiswa`
+  MODIFY `id_mhs` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

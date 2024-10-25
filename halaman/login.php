@@ -43,10 +43,15 @@ if (isset($_SESSION['error'])) {
                        <form action="../proses_mhs/login_user.php" method="POST">
 
                            <div class="input-field">
-                               
+                               <input type="text" class="input" id="username" required="" autocomplete="off" name="Nim">
+                               <label for="email">Nim</label> 
+                            </div> 
+
+                           <div class="input-field">
                                <input type="text" class="input" id="username" required="" autocomplete="off" name="username">
                                <label for="email">Username</label> 
-                            </div> 
+                            </div>
+
                             <div class="input-field">
                                 <input type="password" class="input" id="password" required="" name="password">
                                 <label for="pass">Password</label>

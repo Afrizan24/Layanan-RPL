@@ -24,7 +24,6 @@
             <h4 class="text-white">Menu</h4>
             <a href="indexadmin.php" class="nav-link">Dashboard</a>
             <a href="manajemen.php" class="nav-link">Manajemen Mahasiswa</a>
-            <a href="kategori.php" class="nav-link">Kategori Keluhan</a>
             <a href="keluhan.php" class="nav-link">Daftar Keluhan</a>
             <a href="logout.php" class="nav-link">Logout</a>
         </div>
@@ -37,12 +36,16 @@
                     <tr>
                         <th>NIM</th>
                         <th>Nama</th>
+                        <th>Username</th>
+                        <th>Password</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>123456789</td>
+                        <td>IPUL GAY</td>
+                        <td>IPUL GAY</td>
                         <td>IPUL GAY</td>
                         <td>
                             <a href="#" class="btn btn-primary btn-sm">Edit</a>
@@ -52,7 +55,13 @@
                     <!-- Tambahkan data mahasiswa lainnya di sini -->
                 </tbody>
             </table>
-            <a href="#" class="btn btn-success">Tambah Mahasiswa</a>
+            
+            <div class="mb-3">
+                 <label for="" class="form-label">Cari Mahasiswa</label>
+                 <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
+            </div>
+
+            
         </div>
     </div>
 
