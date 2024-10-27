@@ -1,3 +1,35 @@
+<?php 
+require '../koneksi.php'; 
+
+// Untuk menampilkan Isi
+$query = "SELECT nim, username, password FROM mahasiswa";
+$result = mysqli_query($koneksi, $query);
+// Periksa apakah query berhasil
+if (!$result) {
+    die("Query gagal: " . mysqli_error($koneksi));
+}
+
+
+// Search Beken 
+$nim = '';
+$query = "SELECT nim, username, password FROM mahasiswa"; 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nim = $_POST['nim']; 
+    $query .= " WHERE nim = ?"; 
+}
+$stmt = mysqli_prepare($koneksi, $query);
+if ($nim) {
+    mysqli_stmt_bind_param($stmt, 's', $nim);
+}
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +66,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>NIM</th>
                         <th>Nama</th>
                         <th>Username</th>
@@ -43,23 +76,35 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>123456789</td>
-                        <td>IPUL GAY</td>
-                        <td>IPUL GAY</td>
-                        <td>IPUL GAY</td>
-                        <td>
-                            <a href="#" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
-                            <a href="#" class="btn btn-danger btn-sm"   data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
-                        </td>
-                    </tr>
+                    <?php 
+                            $no = 1; 
+                            while ($mhs = mysqli_fetch_assoc($result)): ?>
+                                <tr>
+                                    <td><?php echo $no++; ?></td> 
+                                    <td><?php echo htmlspecialchars($mhs['nim']); ?></td>
+                                    <td><?php echo htmlspecialchars($mhs['username']); ?></td>
+                                    <td><?php echo htmlspecialchars($mhs['password']); ?></td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
+                                        <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
                     <!-- Tambahkan data mahasiswa lainnya di sini -->
                 </tbody>
             </table>
+
+
             
+            <!-- nyari mahasiswa -->
+            <form action="" method="POST">    
             <div class="mb-3">
-                 <label for="" class="form-label">Cari Mahasiswa</label>
-                 <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
+                <label for="nim" class="form-label">Cari Mahasiswa </label>
+                <input type="text" class="form-control" id="nim" name="nim" required autocomplete="off" value="<?php echo htmlspecialchars($nim); ?>">
+                <button type="submit" class="btn btn-primary mt-2">Cari</button>              
             </div>
+            </form>
+            
         </div>
     </div>
 
