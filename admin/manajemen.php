@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <?php 
 require '../koneksi.php'; 
 
@@ -94,7 +92,6 @@ if (!$result) {
                     <!-- Tambahkan data mahasiswa lainnya di sini -->
                 </tbody>
             </table>
-
 
             
             <!-- nyari mahasiswa -->
