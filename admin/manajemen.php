@@ -31,7 +31,6 @@ if (!$result) {
 
 
 
->>>>>>> a91bd8b1a7a85126c7ff72206e712ec0061714ee
 <!DOCTYPE html>
 <html lang="en">
 <head>
