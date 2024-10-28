@@ -76,8 +76,8 @@ if ($stmt) {
                                 <td><?=$o["tanggapan"]?></td>
                                 <td><?=$o["tgl_keluhan"]?></td>
                                 <td>
-                            <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                            <a href="#" class="btn btn-danger btn-sm">Hapus</a>
+                                        <a href="#" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
+                                        <a href="#" class="btn btn-danger btn-sm"   data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
                         </td>
                     </tr>
                     <?php $i++; ?>
@@ -91,6 +91,54 @@ if ($stmt) {
             </div>
         </div>
     </div>
+
+
+ <!-- //modal Edit// -->
+ <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+             <label for="" class="form-label">Ubah Nim</label>
+             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
+        </div>
+        <div class="mb-3">
+             <label for="" class="form-label">Ubah Nama</label>
+             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-primary">Simpan Perubahan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- //Modal Delete// -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Hapus Data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Apakah Anda yakin ingin menghapus data ini?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-danger">Hapus</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>

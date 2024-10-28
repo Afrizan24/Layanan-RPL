@@ -1,19 +1,3 @@
-<?php
-include '../koneksi.php'; // Memasukkan file koneksi
-
-$sql = "SELECT m.*, k.*, cat.*
-          FROM keluhan k
-          JOIN mahasiswa m ON k.id_mhs = m.id_mhs
-          JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan";
-
-$stmt = $koneksi->prepare($sql);
-
-if ($stmt) {
-    $stmt->execute();
-    $result = $stmt->get_result();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,6 +34,7 @@ if ($stmt) {
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>NIM</th>
                         <th>Username</th>
                         <th>Password</th>
@@ -61,6 +46,7 @@ if ($stmt) {
                         <td>123456789</td>
                         <td>IPUL GAY</td>
                         <td>IPUL GAY</td>
+                        <td>IPUL GAY</td>
                         <td>
                             <a href="#" class="btn btn-primary btn-sm">Edit</a>
                             <a href="#" class="btn btn-danger btn-sm">Hapus</a>
@@ -69,15 +55,79 @@ if ($stmt) {
                     <!-- Tambahkan data mahasiswa lainnya di sini -->
                 </tbody>
             </table>
-            
-            <div class="mb-3">
-                 <label for="" class="form-label">Cari Mahasiswa</label>
-                 <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
-            </div>
 
+
+            
+            <!-- nyari mahasiswa -->
+            <form action="" method="POST">    
+            <div class="mb-3">
+                <label for="nim" class="form-label">Cari Mahasiswa </label>
+                <input type="text" class="form-control" id="nim" name="nim" required autocomplete="off" value="<?php echo htmlspecialchars($nim); ?>">
+                <button type="submit" class="btn btn-primary mt-2">Cari</button>              
+            </div>
+            </form>
             
         </div>
     </div>
+
+
+
+    <!-- //modal Edit// -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+             <label for="" class="form-label">Ubah Nim</label>
+             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
+        </div>
+        <div class="mb-3">
+             <label for="" class="form-label">Ubah Nama</label>
+             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
+        </div>
+        <div class="mb-3">
+             <label for="" class="form-label">Ubah Username</label>
+             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
+        </div>
+        <div class="mb-3">
+             <label for="" class="form-label">Ubah Password</label>
+             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-primary">Simpan Perubahan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- //Modal Delete// -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Hapus Data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Apakah Anda yakin ingin menghapus data ini?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-danger">Hapus</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
