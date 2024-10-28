@@ -1,9 +1,10 @@
 <?php
 include '../koneksi.php'; // Memasukkan file koneksi
 
-$sql = "SELECT keluhan.*, kategori_keluhan.nama_kategori AS nama_kategori
-        FROM keluhan
-        LEFT JOIN kategori_keluhan ON keluhan.id_kategori_keluhan = kategori_keluhan.id_kategori_keluhan";
+$sql = "SELECT m.*, k.*, cat.*
+          FROM keluhan k
+          JOIN mahasiswa m ON k.id_mhs = m.id_mhs
+          JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan";
 
 $stmt = $koneksi->prepare($sql);
 
@@ -67,7 +68,7 @@ if ($stmt) {
                          <?php foreach($result as $o){?>
                                 <td> <?= $i; ?></td>
                                 <td><?=$o["Nim"]?></td>
-                                <td><?=$o["nama"]?></td>
+                                <td><?=$o["username"]?></td>
                                 <td><?=$o["nama_kategori"]?></td>
                                 <td><?=$o["deskripsi"]?></td>
                                 <td><?=$o["lokasi"]?></td>

@@ -14,14 +14,15 @@ $deskripsi = $_POST['deskripsi'];
 
 // Ambil NIM dari session
 $nim = $_SESSION['username']; // Pastikan NIM sudah disimpan dalam session
+$id = $_SESSION ['id_mhs'];
 
 // Validasi dan sanitasi input
 if (!empty($id_kategori_keluhan) && !empty($deskripsi) && !empty($nim)) {
     $tanggal = "$year-$month-$day"; // Format tanggal
 
     // Siapkan dan eksekusi pernyataan
-    $stmt = $koneksi->prepare("INSERT INTO keluhan (id_kategori_keluhan, Nim, deskripsi, lokasi, status, tanggapan, tgl_keluhan) VALUES (?, ?, ?, ?, 'Proses', '', ?)");
-    $stmt->bind_param("issss", $id_kategori_keluhan, $nim, $deskripsi, $lokasi, $tanggal);
+    $stmt = $koneksi->prepare("INSERT INTO keluhan (id_mhs, id_kategori_keluhan, deskripsi, lokasi, status, tanggapan, tgl_keluhan) VALUES (?, ?, ?, ?, 'Proses', '', ?)");
+    $stmt->bind_param("iisss", $id, $id_kategori_keluhan, $deskripsi, $lokasi, $tanggal);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = "Keluhan berhasil dikirim!";

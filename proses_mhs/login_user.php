@@ -3,12 +3,13 @@ session_start();
 require '../koneksi.php'; // Include file konfigurasi database
 
 // Ambil data dari form
-$nim = $_POST['username'];
+$nim = $_POST['Nim'];
+$username = $_POST['username'];
 $password = $_POST['password'];
 
 // Prepare and bind
-$stmt = $koneksi->prepare("SELECT * FROM mahasiswa WHERE Nim = ?");
-$stmt->bind_param("s", $nim);
+$stmt = $koneksi->prepare("SELECT * FROM mahasiswa WHERE Nim = ? && username = ?");
+$stmt->bind_param("ss", $nim,$username);
 
 // Execute the statement
 $stmt->execute();
@@ -16,11 +17,14 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc(); // Ambil data pengguna
+    $id = $user['id_mhs'];
 
     // Periksa hashed password
     if (password_verify($password, $user['password'])) {
         // Login successful
-        $_SESSION['username'] = $nim; // Store NIM in session
+        $_SESSION['username'] = $username; // Store NIM in session
+        $_SESSION['Nim'] = $nim;
+        $_SESSION['id_mhs'] = $id;
         
         // Redirect to index.php
         header("Location: ../beranda.php");

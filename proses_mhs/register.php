@@ -1,16 +1,17 @@
 <?php
 require '../koneksi.php'; 
-$user = $_POST['username'];
+$nim = $_POST['Nim'];
+$name = $_POST['username'];
 $pass = $_POST['password'];
 
     // Hash password
 $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
 
     // Validasi input (pastikan tidak kosong)
-if (!empty($user) && !empty($pass)) {
+if (!empty($name) && !empty($pass)) {
         // Siapkan statement untuk mencegah SQL injection
-    $stmt = $koneksi->prepare("INSERT INTO mahasiswa (Nim, password) VALUES (?, ?)");
-    $stmt->bind_param("is", $user, $hashed_pass);
+    $stmt = $koneksi->prepare("INSERT INTO mahasiswa (Nim,username,password) VALUES (?, ?, ?)");
+    $stmt->bind_param("iss",$nim, $name, $hashed_pass);
 
         // Eksekusi statement
     if ($stmt->execute()) {

@@ -1,3 +1,19 @@
+<?php
+include '../koneksi.php'; // Memasukkan file koneksi
+
+$sql = "SELECT m.*, k.*, cat.*
+          FROM keluhan k
+          JOIN mahasiswa m ON k.id_mhs = m.id_mhs
+          JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan";
+
+$stmt = $koneksi->prepare($sql);
+
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +51,6 @@
                 <thead>
                     <tr>
                         <th>NIM</th>
-                        <th>Nama</th>
                         <th>Username</th>
                         <th>Password</th>
                         <th>Aksi</th>
@@ -44,7 +59,6 @@
                 <tbody>
                     <tr>
                         <td>123456789</td>
-                        <td>IPUL GAY</td>
                         <td>IPUL GAY</td>
                         <td>IPUL GAY</td>
                         <td>
