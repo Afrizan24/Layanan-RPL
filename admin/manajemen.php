@@ -75,16 +75,22 @@ if (!$result) {
                     </tr>
                 </thead>
                 <tbody>
+                <tbody>
                     <tr>
-                        <td>123456789</td>
-                        <td>IPUL GAY</td>
-                        <td>IPUL GAY</td>
-                        <td>IPUL GAY</td>
-                        <td>
-                            <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                            <a href="#" class="btn btn-danger btn-sm">Hapus</a>
-                        </td>
-                    </tr>
+                    <?php 
+                            $no = 1; 
+                            while ($mhs = mysqli_fetch_assoc($result)): ?>
+                                <tr>
+                                    <td><?php echo $no++; ?></td> 
+                                    <td><?php echo htmlspecialchars($mhs['nim']); ?></td>
+                                    <td><?php echo htmlspecialchars($mhs['username']); ?></td>
+                                    <td><?php echo htmlspecialchars($mhs['password']); ?></td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
+                                        <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
                     <!-- Tambahkan data mahasiswa lainnya di sini -->
                 </tbody>
             </table>
