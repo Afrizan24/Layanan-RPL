@@ -9,6 +9,7 @@ $sql = "SELECT m.*, k.*, cat.*
 $stmt = $koneksi->prepare($sql);
 
 if ($stmt) {
+  
     $stmt->execute();
     $result = $stmt->get_result();
 }
