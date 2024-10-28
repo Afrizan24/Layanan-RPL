@@ -2,29 +2,28 @@
 require '../koneksi.php'; 
 
 // Untuk menampilkan Isi
+$nim = ''; // Inisialisasi variabel nim
 $query = "SELECT nim, username, password FROM mahasiswa";
-$result = mysqli_query($koneksi, $query);
-// Periksa apakah query berhasil
-if (!$result) {
-    die("Query gagal: " . mysqli_error($koneksi));
-}
 
 
-// Search Beken 
-$nim = '';
-$query = "SELECT nim, username, password FROM mahasiswa"; 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nim = $_POST['nim']; 
+    $nim = trim($_POST['nim']); 
     $query .= " WHERE nim = ?"; 
 }
+
 $stmt = mysqli_prepare($koneksi, $query);
 if ($nim) {
-    mysqli_stmt_bind_param($stmt, 's', $nim);
+    mysqli_stmt_bind_param($stmt, 's', $nim); // Mengikat parameter jika ada NIM
 }
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
+// Periksa apakah query berhasil
+if (!$result) {
+    die("Query gagal: " . mysqli_error($koneksi));
+}
 ?>
+
 
 
 
@@ -68,7 +67,6 @@ $result = mysqli_stmt_get_result($stmt);
                     <tr>
                         <th>No</th>
                         <th>NIM</th>
-                        <th>Nama</th>
                         <th>Username</th>
                         <th>Password</th>
                         <th>Aksi</th>
@@ -109,40 +107,36 @@ $result = mysqli_stmt_get_result($stmt);
     </div>
 
 
-
-    <!-- //modal Edit// -->
+    <!-- Modal Edit -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit Data</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-             <label for="" class="form-label">Ubah Nim</label>
-             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Data Mahasiswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" action="edit_manajemen.php" method="POST">
+                        <input type="hidden" id="editId" name="id">
+                        <div class="mb-3">
+                            <label for="editNim" class="form-label">NIM</label>
+                            <input type="text" class="form-control" id="editNim" name="nim" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUsername" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="editUsername" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="editPassword" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    </form>
+
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-             <label for="" class="form-label">Ubah Nama</label>
-             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
-        </div>
-        <div class="mb-3">
-             <label for="" class="form-label">Ubah Username</label>
-             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
-        </div>
-        <div class="mb-3">
-             <label for="" class="form-label">Ubah Password</label>
-             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-primary">Simpan Perubahan</button>
-      </div>
     </div>
-  </div>
-</div>
 
 
 <!-- //Modal Delete// -->
