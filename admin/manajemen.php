@@ -2,30 +2,36 @@
 require '../koneksi.php'; 
 
 // Untuk menampilkan Isi
-$nim = ''; // Inisialisasi variabel nim
-$query = "SELECT nim, username, password FROM mahasiswa";
+$search = ''; // Untuk input pencarian
+$query = "SELECT Nim, username, password FROM mahasiswa"; // Query default
+$result = mysqli_query($koneksi, $query);
 
+$search_result = null; // Inisialisasi variabel hasil pencarian
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nim = trim($_POST['nim']); 
-    $query .= " WHERE nim = ?"; 
-}
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
+    $search = trim($_POST['search']); // Mengambil dan membersihkan input pencarian
 
-$stmt = mysqli_prepare($koneksi, $query);
-if ($nim) {
-    mysqli_stmt_bind_param($stmt, 's', $nim); // Mengikat parameter jika ada NIM
-}
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+    if ($search) {
+        // Query untuk pencarian berdasarkan NIM atau username
+        $query = "SELECT * FROM mahasiswa WHERE Nim = ? OR username = ?";
+        
+        // Mempersiapkan statement SQL
+        $stmt = mysqli_prepare($koneksi, $query);
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, 'ss', $search, $search); // Mengikat parameter
+            mysqli_stmt_execute($stmt);
+            $search_result = mysqli_stmt_get_result($stmt); // Mendapatkan hasil pencarian
 
-// Periksa apakah query berhasil
-if (!$result) {
-    die("Query gagal: " . mysqli_error($koneksi));
+            // Mengecek jika query mengalami kegagalan
+            if (!$search_result) {
+                die("Query pencarian gagal: " . mysqli_error($koneksi));
+            }
+        } else {
+            die("Query gagal: " . mysqli_error($koneksi));
+        }
+    }
 }
 ?>
-
-
-
 
 
 
@@ -62,47 +68,89 @@ if (!$result) {
         <!-- Main Content -->
         <div class="content container my-5">
             <h2>Manajemen Mahasiswa</h2>
-            <table class="table table-striped">
-                <thead>
+    <!-- Tabel untuk menampilkan semua data mahasiswa -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>NIM</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $no = 1;
+            // Pastikan $result valid sebelum melakukan fetch data
+            if ($result && mysqli_num_rows($result) > 0) {
+                while ($mhs = mysqli_fetch_assoc($result)) : ?>
                     <tr>
-                        <th>No</th>
-                        <th>NIM</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Aksi</th>
+                        <td><?php echo $no++; ?></td>
+                        <td><?php echo htmlspecialchars($mhs['Nim']); ?></td>
+                        <td><?php echo htmlspecialchars($mhs['username']); ?></td>
+                        <td><?php echo htmlspecialchars($mhs['password']); ?></td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
+                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                <tbody>
-                    <tr>
-                    <?php 
-                            $no = 1; 
-                            while ($mhs = mysqli_fetch_assoc($result)): ?>
-                                <tr>
-                                    <td><?php echo $no++; ?></td> 
-                                    <td><?php echo htmlspecialchars($mhs['nim']); ?></td>
-                                    <td><?php echo htmlspecialchars($mhs['username']); ?></td>
-                                    <td><?php echo htmlspecialchars($mhs['password']); ?></td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
-                                        <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                    <!-- Tambahkan data mahasiswa lainnya di sini -->
-                </tbody>
-            </table>
+                <?php endwhile; 
+            } else { ?>
+                <tr>
+                    <td colspan="5">Data tidak ditemukan.</td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
 
             
             <!-- nyari mahasiswa -->
-            <form action="" method="POST">    
-            <div class="mb-3">
-                <label for="nim" class="form-label">Cari Mahasiswa </label>
-                <input type="text" class="form-control" id="nim" name="nim" required autocomplete="off" value="<?php echo htmlspecialchars($nim); ?>">
-                <button type="submit" class="btn btn-primary mt-2">Cari</button>              
-            </div>
-            </form>
-            
+        <form action="" method="POST">    
+        <div class="mb-3">
+            <label for="search" class="form-label">Cari Mahasiswa</label>
+            <input type="text" class="form-control" id="search" name="search" placeholder="Masukkan NIM atau Username" required autocomplete="off" value="<?php echo htmlspecialchars($search); ?>">
+            <button type="submit" class="btn btn-primary mt-2">Cari</button>              
+        </div>
+    </form>
+
+    <!-- Hasil Pencarian -->
+    <?php if ($search_result && mysqli_num_rows($search_result) > 0): ?>
+        <h3>Hasil Pencarian untuk "<?php echo htmlspecialchars($search); ?>"</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>NIM</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $no = 1;
+                // Loop untuk menampilkan data hasil pencarian
+                while ($mhs = mysqli_fetch_assoc($search_result)) : ?>
+                    <tr>
+                        <td><?php echo $no++; ?></td>
+                        <td><?php echo htmlspecialchars($mhs['Nim']); ?></td>
+                        <td><?php echo htmlspecialchars($mhs['username']); ?></td>
+                        <td><?php echo htmlspecialchars($mhs['password']); ?></td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
+                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    <?php elseif ($search): ?>
+        <p>Data tidak ditemukan untuk pencarian "<?php echo htmlspecialchars($search); ?>"</p>
+    <?php endif; ?>
+</div>
+           
+</div>
         </div>
     </div>
 
@@ -120,7 +168,7 @@ if (!$result) {
                         <input type="hidden" id="editId" name="id">
                         <div class="mb-3">
                             <label for="editNim" class="form-label">NIM</label>
-                            <input type="text" class="form-control" id="editNim" name="nim" required>
+                            <input type="text" class="form-control" id="editNim" name="" required>
                         </div>
                         <div class="mb-3">
                             <label for="editUsername" class="form-label">Username</label>
