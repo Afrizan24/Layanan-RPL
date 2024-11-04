@@ -1,7 +1,7 @@
 <?php
 // Ambil kategori dari URL
+
 require './koneksi.php';
-session_start(); // Pastikan session sudah dimulai
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : ''; // Ambil username dari session
 $id_kategori_keluhan = isset($_GET['kategori']) ? $_GET['kategori'] : '';
 
@@ -18,6 +18,7 @@ $stmt = $koneksi->prepare($sql_main);
 $stmt->bind_param("s", $username); // Bind parameter username
 $stmt->execute();
 $result_main = $stmt->get_result();
+
 ?>
 
 
