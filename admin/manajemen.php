@@ -6,23 +6,23 @@ $search = ''; // Untuk input pencarian
 $query = "SELECT Nim, username, password FROM mahasiswa"; // Query default
 $result = mysqli_query($koneksi, $query);
 
-$search_result = null; // Inisialisasi variabel hasil pencarian
+$search_result = null; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
     $search = trim($_POST['search']); // Mengambil dan membersihkan input pencarian
 
     if ($search) {
-        // Query untuk pencarian berdasarkan NIM atau username
+        
         $query = "SELECT * FROM mahasiswa WHERE Nim = ? OR username = ?";
         
         // Mempersiapkan statement SQL
         $stmt = mysqli_prepare($koneksi, $query);
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, 'ss', $search, $search); // Mengikat parameter
+            mysqli_stmt_bind_param($stmt, 'ss', $search, $search); 
             mysqli_stmt_execute($stmt);
-            $search_result = mysqli_stmt_get_result($stmt); // Mendapatkan hasil pencarian
+            $search_result = mysqli_stmt_get_result($stmt); 
 
-            // Mengecek jika query mengalami kegagalan
+            
             if (!$search_result) {
                 die("Query pencarian gagal: " . mysqli_error($koneksi));
             }
@@ -138,8 +138,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
                         <td><?php echo htmlspecialchars($mhs['username']); ?></td>
                         <td><?php echo htmlspecialchars($mhs['password']); ?></td>
                         <td>
-                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
-                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>" data-username="<?php echo htmlspecialchars($mhs['username']); ?>">Edit</a>
+                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>">Hapus</a>
+                        </td>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -155,56 +157,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
     </div>
 
 
-    <!-- Modal Edit -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+   <!-- Modal Edit -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="edit_manajemen.php" method="POST">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Data Mahasiswa</h5>
+                    <h5 class="modal-title" id="editModalLabel">Edit Mahasiswa</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editForm" action="edit_manajemen.php" method="POST">
-                        <input type="hidden" id="editId" name="id">
-                        <div class="mb-3">
-                            <label for="editNim" class="form-label">NIM</label>
-                            <input type="text" class="form-control" id="editNim" name="" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editUsername" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="editUsername" name="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="editPassword" name="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                    </form>
-
+                    <div class="mb-3">
+                        <label for="edit-username" class="form-label">Nim</label>
+                        <input type="text" class="form-control" id="edit-username" name="Nim" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="edit-username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="edit-password" name="password" required>
+                    </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" name="edit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+ 
         </div>
     </div>
-
-
-<!-- //Modal Delete// -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Hapus Data</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah Anda yakin ingin menghapus data ini?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-danger">Hapus</button>
-      </div>
-    </div>
-  </div>
 </div>
+
+<!-- Modal Hapus -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="delete.php" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Hapus Mahasiswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                    <input type="hidden" name="nim" id="delete-nim">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" name="delete" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 

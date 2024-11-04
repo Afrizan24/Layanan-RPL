@@ -17,6 +17,7 @@ if (!empty($search)) {
                 FROM keluhan k
                 JOIN mahasiswa m ON k.id_mhs = m.id_mhs
                 JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan
+                
                 WHERE m.Nim LIKE ? OR m.username LIKE ?";
                         $stmt = $koneksi->prepare($sql_search);
                         $search_param = "%" . $search . "%";
