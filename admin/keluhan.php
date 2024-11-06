@@ -25,6 +25,7 @@ if (!empty($search)) {
                         $stmt->execute();
                         $result_search = $stmt->get_result();
 }
+
 ?>
 
 
@@ -73,7 +74,7 @@ if (!empty($search)) {
                     <th>Status</th>
                     <th>Tanggapan</th>
                     <th>Waktu</th>
-                    <th>Aksi</th>
+                    <th>gambar</th>
                 </tr>
             </thead>
             <!-- result main untuk tabel tetap le  -->
@@ -88,12 +89,21 @@ if (!empty($search)) {
                               <td><?= $o["deskripsi"]; ?></td>
                               <td><?= $o["lokasi"]; ?></td>
                               <td><?= $o["status"]; ?></td>
-                              <td><?= $o["tanggapan"]; ?></td>
+                              <td>
+                                  <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Setujui</a>
+                                  <a href="hapus_keluhan.php?id_keluhan=<?= $o['id_keluhan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tolak Keluhan Mahasiswa')">Tolak</a>
+                              </td>
                               <td><?= $o["tgl_keluhan"]; ?></td>
                               <td>
-                                  <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
-                                  <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
-                              </td>
+                                <?php
+                                  if ($o["gambar"]){
+                                    echo '<img src="../src/img' . htmlspecialchars($o["gambar"], ENT_QUOTES, 'UTF-8') . '" alt="Gambar Keluhan" style="width:100px; height:auto;">';
+                                  }else{
+                                    echo 'gambar tidak ada';
+                                  }
+                                ?>
+                                </td>
+
                           </tr>
                           <?php $i++; ?>
                       <?php endwhile; ?>
@@ -128,7 +138,7 @@ if (!empty($search)) {
                     <th>Status</th>
                     <th>Tanggapan</th>
                     <th>Waktu</th>
-                    <th>Aksi</th>
+                    <th>Gambar</th>
                 </tr>
             </thead>
                 <?php $i = 1; ?>
@@ -142,12 +152,22 @@ if (!empty($search)) {
                               <td><?= $o["deskripsi"]; ?></td>
                               <td><?= $o["lokasi"]; ?></td>
                               <td><?= $o["status"]; ?></td>
-                              <td><?= $o["tanggapan"]; ?></td>
+                              <td>
+                                  <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Setujui</a>
+                                  <a href="hapus_keluhan.php?id_keluhan=<?= $o['id_keluhan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Tolak</a>
+                              </td>
                               <td><?= $o["tgl_keluhan"]; ?></td>
                               <td>
-                                  <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
-                                  <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
-                              </td>
+                                <?php
+                                  if ($o["gambar"]){
+                                    echo '<img src="../src/img' . htmlspecialchars($o["gambar"], ENT_QUOTES, 'UTF-8') . '" alt="Gambar Keluhan" style="width:100px; height:auto;">';
+                                  }else{
+                                    echo 'gambar tidak ada';
+                                  }
+                                ?>  
+                                </td>
+                            
+                            
                           </tr>
                           <?php $i++; ?>
                       <?php endwhile; ?>
@@ -194,24 +214,9 @@ if (!empty($search)) {
 </div>
 
 
-<!-- //Modal Delete// -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Hapus Data</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Apakah Anda yakin ingin menghapus data ini?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-danger">Hapus</button>
-      </div>
-    </div>
-  </div>
-</div>
+
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
