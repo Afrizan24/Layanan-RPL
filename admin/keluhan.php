@@ -42,9 +42,9 @@ if (!empty($search)) {
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" id="menu-toggle">
+            <!-- <button class="navbar-toggler" type="button" id="menu-toggle">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+            </button> -->
             <a class="navbar-brand" href="#">Nama</a>
         </div>
     </nav>
@@ -192,22 +192,19 @@ if (!empty($search)) {
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit Data</h5>
+        <h5 class="modal-title" id="editModalLabel">Setuju Keluhan Mahasiswa</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="mb-3">
-             <label for="" class="form-label">Ubah Nim</label>
+             <label for="" class="form-label">Ubah Berikan Tanggapan</label>
              <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
         </div>
-        <div class="mb-3">
-             <label for="" class="form-label">Ubah Nama</label>
-             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
-        </div>
+     
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-primary">Simpan Perubahan</button>
+        <button type="button" class="btn btn-primary">Setujui</button>
       </div>
     </div>
   </div>
