@@ -105,6 +105,7 @@ if (!empty($search)) {
 
                       </tr>
                       <?php $i++; ?>
+                      
                   <?php endwhile; ?>
               <?php else: ?>
                   <tr>

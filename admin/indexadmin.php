@@ -33,6 +33,7 @@
         <!-- Main Content -->
         <div class="content">
             <h2>Welcome Nama</h2>
+            
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur et repellat accusamus distinctio voluptas? Alias corrupti quos consequatur cum eum.</p>
             <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">

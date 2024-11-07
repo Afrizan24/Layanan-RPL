@@ -181,6 +181,7 @@ if (!empty($search)) {
                   </tr>
               <?php endif; ?>
             </tbody>
+            
         </table>
             <?php elseif ($search): ?>
                 <p>Data tidak ditemukan untuk pencarian "<?php echo htmlspecialchars($search); ?>"</p>
