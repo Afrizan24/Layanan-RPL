@@ -48,9 +48,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" id="menu-toggle">
+            <!-- <button class="navbar-toggler" type="button" id="menu-toggle">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+            </button> -->
             <a class="navbar-brand" href="#">Nama</a>
         </div>
     </nav>
@@ -92,8 +92,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
                         <td><?php echo htmlspecialchars($mhs['password']); ?></td>
                         <td>
                             <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
-                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus</a>
-                        </td>
+                            <a href="hapus_manajemen.php?Nim=<?php echo htmlspecialchars($mhs['Nim']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
+                            </td>
                     </tr>
                 <?php endwhile; 
             } else { ?>
@@ -140,8 +140,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
                         <td>
                         <td>
                             <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>" data-username="<?php echo htmlspecialchars($mhs['username']); ?>">Edit</a>
-                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>">Hapus</a>
-                        </td>
+                            <a href="hapus_manajemen.php?Nim=<?php echo htmlspecialchars($mhs['Nim']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
+                            </td>
                         </td>
                     </tr>
                 <?php endwhile; ?>
