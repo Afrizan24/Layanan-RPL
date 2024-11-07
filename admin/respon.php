@@ -25,9 +25,7 @@ if (!empty($search)) {
                         $stmt->execute();
                         $result_search = $stmt->get_result();
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,12 +58,9 @@ if (!empty($search)) {
             <a href="logout.php" class="nav-link">Logout</a>
         </div>
 
-      </div>
-      
-      <!-- Main Content -->
-    </div>
-    <div class="content container my-5">
-        <h2>Manajemen Keluhan</h2>
+        <!-- Main Content -->
+        <div class="content container my-5">
+        <h2>Respon</h2>
         <table class="table table-striped">
         <thead>
             <tr>
@@ -119,103 +114,6 @@ if (!empty($search)) {
             </tbody>
         </table>
 
-        <div class="mb-3">
-          <form action="" method="GET">
-            <label for="search" class="form-label">Cari Yang Mengeluh</label>
-            <input type="text" class="form-control" id="search" name="search" placeholder="Masukkan NIM atau Username" required autocomplete="off" value="<?php echo htmlspecialchars($search); ?>">
-            <button type="submit" class="btn btn-primary mt-2">Cari</button>  
-          </div>
-        </form>
-
-      <!-- result_search untuk hasil pencarian le  -->
-      <?php if (!empty($search)): ?>
-      <h2>Hasil Pencarian untuk: "<?= htmlspecialchars($search); ?>"</h2>
-      <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>NIM</th>
-                <th>Nama</th>
-                <th>Kategori Keluhan</th>
-                <th>Deskripsi</th>
-                <th>Lokasi</th>
-                <th>Status</th>
-                <th>Tanggapan</th>
-                <th>Waktu</th>
-                <th>Gambar</th>
-            </tr>
-        </thead>
-            <?php $i = 1; ?>
-              <?php if ($result_search && $result_search->num_rows > 0): ?>
-                  <?php while ($o = $result_search->fetch_assoc()): ?>
-                      <tr>
-                          <td><?= $i; ?></td>
-                          <td><?= $o["Nim"]; ?></td>
-                          <td><?= $o["username"]; ?></td>
-                          <td><?= $o["nama_kategori"]; ?></td>
-                          <td><?= $o["deskripsi"]; ?></td>
-                          <td><?= $o["lokasi"]; ?></td>
-                          <td><?= $o["status"]; ?></td>
-                          <td>
-                              <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Setujui</a>
-                              <a href="hapus_keluhan.php?id_keluhan=<?= $o['id_keluhan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Tolak</a>
-                          </td>
-                          <td><?= $o["tgl_keluhan"]; ?></td>
-                          <td>
-                            <?php
-                              if ($o["gambar"]){
-                                echo '<img src="../src/img' . htmlspecialchars($o["gambar"], ENT_QUOTES, 'UTF-8') . '" alt="Gambar Keluhan" style="width:100px; height:auto;">';
-                              }else{
-                                echo 'gambar tidak ada';
-                              }
-                            ?>  
-                            </td>
-                        
-                        
-                      </tr>
-                      <?php $i++; ?>
-                  <?php endwhile; ?>
-              <?php else: ?>
-                  <tr>
-                      <td colspan="10">No data found</td>
-                  </tr>
-              <?php endif; ?>
-            </tbody>
-        </table>
-            <?php elseif ($search): ?>
-                <p>Data tidak ditemukan untuk pencarian "<?php echo htmlspecialchars($search); ?>"</p>
-            <?php endif; ?>
-            
-    </div>
-
-
-<!-- //modal Edit// -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="editModalLabel">Setuju Keluhan Mahasiswa</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-      <div class="mb-3">
-           <label for="" class="form-label">Ubah Berikan Tanggapan</label>
-           <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
-      </div>
-   
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-      <button type="button" class="btn btn-primary">Setujui</button>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -226,6 +124,4 @@ if (!empty($search)) {
         });
     </script>
 </body>
-
 </html>
-        

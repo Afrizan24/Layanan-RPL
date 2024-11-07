@@ -62,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
             <a href="indexadmin.php" class="nav-link">Dashboard</a>
             <a href="manajemen.php" class="nav-link">Manajemen Mahasiswa</a>
             <a href="keluhan.php" class="nav-link">Daftar Keluhan</a>
+            <a href="respon.php" class="nav-link">Respon</a>
             <a href="logout.php" class="nav-link">Logout</a>
         </div>
 
