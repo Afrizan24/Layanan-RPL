@@ -12,9 +12,9 @@
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" id="menu-toggle">
+            <!-- <button class="navbar-toggler" type="button" id="menu-toggle">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+            </button> -->
             <a class="navbar-brand" href="#">Nama</a>
         </div>
     </nav>
@@ -26,12 +26,14 @@
             <a href="indexadmin.php" class="nav-link">Dashboard</a>
             <a href="manajemen.php" class="nav-link">Manajemen Mahasiswa</a>
             <a href="keluhan.php" class="nav-link"> Daftar Keluhan</a>
+            <a href="respon.php" class="nav-link">Respon</a>
             <a href="logout.php" class="nav-link">Logout</a>
         </div>
 
         <!-- Main Content -->
         <div class="content">
             <h2>Welcome Nama</h2>
+            
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur et repellat accusamus distinctio voluptas? Alias corrupti quos consequatur cum eum.</p>
             <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
