@@ -1,3 +1,5 @@
+Options -Indexes
+
 # Mengaktifkan URL rewriting
 RewriteEngine On
 
