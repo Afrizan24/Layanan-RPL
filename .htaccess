@@ -2,20 +2,17 @@ Options -Indexes
 DirectoryIndex beranda.php
 
 RewriteEngine On
-
+RewriteRule ^login$ /halaman/login.php [L]
+RewriteRule ^register$ /halaman/register.php [L]
 RewriteRule ^kategori/([0-9]+)$ beranda.php?p=laporan&kategori=$1 [L,QSA]
-# Redirect URLs tanpa 'p=' ke beranda.php dengan parameter 'p'
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^/]+)$ beranda.php?p=$1 [L,QSA]
 
-# Mengarahkan URL tertentu ke halaman spesifik
-RewriteRule ^admin$ /admin/indexadmin.php [L]
 RewriteRule ^laporan$ /halaman/laporan.php [L]
 RewriteRule ^layanan$ /halaman/layanan.php [L]
-RewriteRule ^login$ /halaman/login.php [L]
-RewriteRule ^register$ /halaman/register.php [L]
+
 RewriteRule ^beranda$ beranda.php [L]
 
-# Halaman error 404
-ErrorDocument 404 /halaman/404.php
+
