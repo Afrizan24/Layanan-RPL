@@ -89,10 +89,7 @@ if (!empty($search)) {
                           <td><?= $o["deskripsi"]; ?></td>
                           <td><?= $o["lokasi"]; ?></td>
                           <td><?= $o["status"]; ?></td>
-                          <td>
-                              <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Setujui</a>
-                              <a href="hapus_keluhan.php?id_keluhan=<?= $o['id_keluhan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tolak Keluhan Mahasiswa')">Tolak</a>
-                          </td>
+                          <td><?= $o["tanggapan"]; ?></td>
                           <td><?= $o["tgl_keluhan"]; ?></td>
                           <td>
                             <?php

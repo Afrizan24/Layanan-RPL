@@ -76,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
                 <th>No</th>
                 <th>NIM</th>
                 <th>Username</th>
-    
                 <th>Password</th>
                 <th>Aksi</th>
             </tr>
