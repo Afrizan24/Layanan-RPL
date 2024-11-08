@@ -1,37 +1,34 @@
 <?php
 require '../koneksi.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Ambil data dari form
-    $nim = $_POST['nim'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit'])) {
+    $original_nim = $_POST['original_nim']; // Get original Nim
+    $nim = !empty($_POST['nim']) ? $_POST['nim'] : $original_nim; // Use the provided Nim or fallback
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Validasi data
-    if (!empty($nim) && !empty($username) && !empty($password)) {
-        // Hash password
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    // Hash the password using PHP's password_hash function
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT); // You can use PASSWORD_BCRYPT or other options as well
 
-        // Siapkan pernyataan SQL untuk memperbarui data mahasiswa
-        $stmt = $koneksi->prepare("UPDATE mahasiswa SET username = ?, password = ? WHERE Nim = ?");
-        $stmt->bind_param("ssi", $username, $hashedPassword, $nim);
+    // Update query
+    $query = "UPDATE mahasiswa SET Nim = ?, username = ?, password = ? WHERE Nim = ?";
+    $stmt = mysqli_prepare($koneksi, $query);
 
-        // Eksekusi statement
-        if ($stmt->execute()) {
-            // Redirect kembali ke halaman admin setelah berhasil
-            header("Location: ../admin/manajemen.php");
-            exit();
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "ssss", $nim, $username, $hashed_password, $original_nim);
+        mysqli_stmt_execute($stmt);
+
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            echo "Data mahasiswa berhasil diperbarui.";
         } else {
-            echo "Terjadi kesalahan: " . $stmt->error;
+            echo "Tidak ada perubahan data.";
         }
 
-        // Tutup statement
-        $stmt->close();
+        mysqli_stmt_close($stmt);
     } else {
-        echo "Semua field harus diisi.";
+        echo "Error: " . mysqli_error($koneksi);
     }
-}
 
-// Tutup koneksi
-$koneksi->close();
+    mysqli_close($koneksi);
+}
 ?>

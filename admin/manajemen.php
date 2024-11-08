@@ -93,9 +93,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
                         <td><?php echo htmlspecialchars($mhs['username']); ?></td>
                         <td><?php echo htmlspecialchars($mhs['password']); ?></td>
                         <td>
-                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
-                            <a href="hapus_manajemen.php?Nim=<?php echo htmlspecialchars($mhs['Nim']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
-                            </td>
+    <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>" data-username="<?php echo htmlspecialchars($mhs['username']); ?>">Edit</a>
+    <a href="../proses_admin/hapus_manajemen.php?Nim=<?php echo htmlspecialchars($mhs['Nim']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
+</td>
+
                     </tr>
                 <?php endwhile; 
             } else { ?>
@@ -141,9 +142,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
                         <td><?php echo htmlspecialchars($mhs['password']); ?></td>
                         <td>
                         <td>
-                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>" data-username="<?php echo htmlspecialchars($mhs['username']); ?>">Edit</a>
-                            <a href="hapus_manajemen.php?Nim=<?php echo htmlspecialchars($mhs['Nim']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
-                            </td>
+    <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>" data-username="<?php echo htmlspecialchars($mhs['username']); ?>">Edit</a>
+    <a href="../proses_admin/hapus_manajemen.php?Nim=<?php echo htmlspecialchars($mhs['Nim']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
+</td>
+
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -158,20 +160,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
         </div>
     </div>
 
-
-   <!-- Modal Edit -->
+<!-- Modal Edit -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="edit_manajemen.php" method="POST">
+            <form action="../proses_admin/edit_manajemen.php" method="POST">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModalLabel">Edit Mahasiswa</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <!-- Hidden field to store the original Nim -->
+                    <input type="hidden" id="original-nim" name="original_nim">
+                    
                     <div class="mb-3">
-                        <label for="edit-username" class="form-label">Nim</label>
-                        <input type="text" class="form-control" id="edit-username" name="Nim" required>
+                        <label for="edit-nim" class="form-label">Nim</label>
+                        <input type="text" class="form-control" id="edit-nim" name="nim" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-username" class="form-label">Username</label>
@@ -187,39 +191,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
                     <button type="submit" name="edit" class="btn btn-primary">Simpan Perubahan</button>
                 </div>
             </form>
- 
         </div>
     </div>
 </div>
-
-<!-- Modal Hapus -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="delete.php" method="POST">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Hapus Mahasiswa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Apakah Anda yakin ingin menghapus data ini?</p>
-                    <input type="hidden" name="nim" id="delete-nim">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" name="delete" class="btn btn-danger">Hapus</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const editButtons = document.querySelectorAll(".btn-primary[data-bs-target='#editModal']");
+
+    editButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const nim = button.getAttribute("data-nim");
+            const username = button.getAttribute("data-username");
+            const password = button.getAttribute("data-password");
+
+            document.getElementById("edit-nim").value = nim;
+            document.getElementById("original-nim").value = nim;
+            document.getElementById("edit-username").value = username;
+            document.getElementById("edit-password").value = password;
+        });
+    });
+});
+
         // Toggle sidebar visibility
         document.getElementById("menu-toggle").addEventListener("click", function () {
             document.querySelector(".sidebar").classList.toggle("active");
