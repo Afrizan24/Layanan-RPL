@@ -27,7 +27,9 @@ if ($result->num_rows > 0) {
         $_SESSION['id_mhs'] = $id;
         
         // Redirect to index.php
-        header("Location: ../beranda.php");
+        $redirectUrl = "../beranda";
+        $redirectUrl .= "?user=" . urlencode($_SESSION['username']);
+        header("Location: " . $redirectUrl);
         exit();
     } else {
         // Password tidak valid

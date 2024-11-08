@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    echo '<a href="beranda.php?user=' . urlencode($username) . '"></a>';
+} 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +61,6 @@
 
 <body class="vh-100 ">
 <?php
-session_start();
 if (isset($_SESSION['message'])) {
     echo '<div id="myModal" class="modal">
             <div class="modal-content">
@@ -78,17 +86,19 @@ if (isset($_SESSION['message'])) {
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="beranda">Beranda</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/rpl/layanan">Layanan</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/rpl/laporan">Laporkan</a>
-              </li>
-            </ul>
+          <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="beranda<?php echo isset($_SESSION['username']) ? '?user=' . urlencode($_SESSION['username']) : ''; ?>">Beranda</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/rpl/layanan<?php echo isset($_SESSION['username']) ? '?user=' . urlencode($_SESSION['username']) : ''; ?>">Layanan</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/rpl/laporan<?php echo isset($_SESSION['username']) ? '?user=' . urlencode($_SESSION['username']) : ''; ?>">Laporkan</a>
+    </li>
+</ul>
+
+
             <?php
                        if (isset($_SESSION['username'])) {
                            echo '<form action="proses_mhs/logout.php" method="POST">

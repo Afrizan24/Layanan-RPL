@@ -2,7 +2,7 @@
 session_start();
 require '../koneksi.php';
 if (!isset($_SESSION['username'])) {
-    header("Location: ../beranda.php"); 
+    header("Location: ../beranda"); 
     exit();
 }
 
@@ -46,7 +46,7 @@ if (!empty($id_kategori_keluhan) && !empty($deskripsi) && !empty($nim)) {
 
     if ($stmt->execute()) {
         $_SESSION['message'] = "Keluhan berhasil dikirim!";
-        header("Location: ../beranda.php");
+        header("Location: ../beranda");
         exit();
     } else {
         echo "Kesalahan: " . $stmt->error;

@@ -2,8 +2,11 @@ Options -Indexes
 DirectoryIndex beranda.php
 
 RewriteEngine On
+RewriteCond %{QUERY_STRING} !user=
+RewriteRule ^(.*)$ /rpl/$1?user=%{HTTP_COOKIE} [L,QSA]
 RewriteRule ^login$ /halaman/login.php [L]
 RewriteRule ^register$ /halaman/register.php [L]
+RewriteCond %{QUERY_STRING} (^|&)user=([^&]+)(&|$)
 RewriteRule ^kategori/([0-9]+)$ beranda.php?p=laporan&kategori=$1 [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -15,4 +18,4 @@ RewriteRule ^layanan$ /halaman/layanan.php [L]
 
 RewriteRule ^beranda$ beranda.php [L]
 
-
+ErrorDocument 404 /halaman/404.php
