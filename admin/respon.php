@@ -8,7 +8,8 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $sql_main = "SELECT m.*, k.*, cat.*
           FROM keluhan k
           JOIN mahasiswa m ON k.id_mhs = m.id_mhs
-          JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan";
+          JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan
+          WHERE k.Status = 'sudah'";
 $result_main = $koneksi->query($sql_main);
 
 // Kode Pencari menampilkan kalok ingput sekaligus menampilkan hasil dari pencarian le

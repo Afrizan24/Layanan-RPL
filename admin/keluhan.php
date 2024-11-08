@@ -91,8 +91,8 @@ if (!empty($search)) {
                               <td><?= $o["lokasi"]; ?></td>
                               <td><?= $o["status"]; ?></td>
                               <td>
-                                  <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Setujui</a>
-                                  <a href="hapus_keluhan.php?id_keluhan=<?= $o['id_keluhan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tolak Keluhan Mahasiswa')">Tolak</a>
+                              <a href="#" class="btn btn-primary btn-sm setujui-btn" data-id="<?= $o['id_keluhan']; ?>" data-bs-toggle="modal" data-bs-target="#editModal">Setujui</a>
+                              <a href="hapus_keluhan.php?id_keluhan=<?= $o['id_keluhan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tolak Keluhan Mahasiswa')">Tolak</a>
                               </td>
                               <td><?= $o["tgl_keluhan"]; ?></td>
                               <td>
@@ -189,33 +189,30 @@ if (!empty($search)) {
 
  <!-- //modal Edit// -->
  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Setuju Keluhan Mahasiswa</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-             <label for="" class="form-label">Ubah Berikan Tanggapan</label>
-             <input type="text" class="form-control" id="username" name="username" required autocomplete="off">
-        </div>
-     
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-primary">Setujui</button>
-      </div>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Setuju Keluhan Mahasiswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form action="../proses_admin/proces_respon.php" method="POST">
+    <input type="hidden" id="keluhanId" name="keluhanId">
+    <div class="mb-3">
+        <label for="response" class="form-label">Ubah Berikan Tanggapan</label>
+        <input type="text" class="form-control" id="response" name="response" required autocomplete="off">
     </div>
-  </div>
-</div>
+    <button type="submit" class="btn btn-primary">Setujui</button>
+</form>
 
-<!-- Tombol Setujui dan Tolak di Tabel -->
+        </div>
+
+<!-- Tombol Setujui dan Tolak di Tabel
 <td>
 <a href="#" class="btn btn-primary btn-sm setujui-btn" data-id="<?= $o['id_keluhan']; ?>" data-bs-toggle="modal" data-bs-target="#editModal">Setujui</a>
 
     <a href="hapus_keluhan.php?id_keluhan=<?= $o['id_keluhan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tolak Keluhan Mahasiswa')">Tolak</a>
-</td>
+</td> -->
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
