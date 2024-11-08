@@ -1,0 +1,21 @@
+# Mengaktifkan URL rewriting
+RewriteEngine On
+
+# Mengarahkan permintaan ke index.php di folder admin
+RewriteRule ^admin$ /admin/indexadmin.php [L]
+
+# Mengarahkan permintaan ke halaman laporan di halaman publik
+RewriteRule ^laporan$ /halaman/laporan.php [L]
+
+# Mengarahkan permintaan ke halaman layanan di halaman publik
+RewriteRule ^layanan$ /halaman/layanan.php [L]
+
+# Menangani permintaan login dan register
+RewriteRule ^login$ /halaman/login.php [L]
+RewriteRule ^register$ /halaman/register.php [L]
+
+# Halaman utama (Beranda)
+RewriteRule ^beranda$ beranda.php [L]
+
+# Redirect semua permintaan yang tidak ditemukan ke halaman error 404
+ErrorDocument 404 /halaman/404.php

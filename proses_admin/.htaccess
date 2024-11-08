@@ -1,0 +1,16 @@
+<FilesMatch "\.php$">
+    Require all denied
+</FilesMatch>
+
+<Files "edit_manajemen.php">
+    Require all granted
+</Files>
+<Files "proces_laporan.php">
+    Require all granted
+</Files>
+<Files "hapus_manajemen.php">
+    Require all granted
+</Files>
+<Files "hapus_keluhan.php">
+    Require all granted
+</Files>

@@ -1,0 +1,5 @@
+# Mengaktifkan proteksi password
+AuthType Basic
+AuthName "Admin Area"
+AuthUserFile "C:/xampp/htdocs/rpl/.htpasswd"
+Require valid-user

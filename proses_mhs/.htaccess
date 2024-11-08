@@ -1,0 +1,17 @@
+# Batasi akses ke semua file PHP
+<FilesMatch "\.php$">
+    Require all denied
+</FilesMatch>
+
+<Files "login_user.php">
+    Require all granted
+</Files>
+<Files "logout.php">
+    Require all granted
+</Files>
+<Files "proses_laporan.php">
+    Require all granted
+</Files>
+<Files "register.php">
+    Require all granted
+</Files>
