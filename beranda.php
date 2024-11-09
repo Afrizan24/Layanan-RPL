@@ -86,7 +86,7 @@ if (isset($_SESSION['message'])) {
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-auto">
     <li class="nav-item">
         <a class="nav-link" href="beranda<?php echo isset($_SESSION['username']) ? '?user=' . urlencode($_SESSION['username']) : ''; ?>">Beranda</a>
     </li>
