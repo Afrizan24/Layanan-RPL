@@ -7,7 +7,7 @@ RewriteRule ^(.*)$ /rpl/$1?user=%{HTTP_COOKIE} [L,QSA]
 RewriteRule ^login$ /halaman/login.php [L]
 RewriteRule ^register$ /halaman/register.php [L]
 RewriteCond %{QUERY_STRING} (^|&)user=([^&]+)(&|$)
-RewriteRule ^kategori/([0-9]+)$ beranda.php?p=laporan&kategori=$1 [L,QSA]
+RewriteRule ^kategori([0-9]+)$ beranda.php?p=laporan&kategori=$1 [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

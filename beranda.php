@@ -88,13 +88,13 @@ if (isset($_SESSION['message'])) {
           <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
     <li class="nav-item">
-        <a class="nav-link" href="beranda<?php echo isset($_SESSION['username']) ? '?user=' . urlencode($_SESSION['username']) : ''; ?>">Beranda</a>
+        <a class="nav-link" href="beranda">Beranda</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/rpl/layanan<?php echo isset($_SESSION['username']) ? '?user=' . urlencode($_SESSION['username']) : ''; ?>">Layanan</a>
+        <a class="nav-link" href="/rpl/layanan">Layanan</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/rpl/laporan<?php echo isset($_SESSION['username']) ? '?user=' . urlencode($_SESSION['username']) : ''; ?>">Laporkan</a>
+        <a class="nav-link" href="/rpl/laporan">Laporkan</a>
     </li>
 </ul>
 

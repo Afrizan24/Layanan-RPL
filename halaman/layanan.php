@@ -40,7 +40,7 @@ $id_kategori_keluhan = isset($_GET['kategori']) ? $_GET['kategori'] : '';
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Keluhan Fasilitas</h5>
           <p class="card-text">Di bagian ini, mahasiswa dapat menyampaikan keluhan terkait kondisi fasilitas kampus, seperti ruang kelas, laboratorium, perpustakaan, fasilitas kelas seperti AC, dan area umum lainnya. Apakah ada fasilitas yang kurang memadai, tidak terawat, atau tidak berfungsi dengan baik? Kami ingin mendengar pengalaman Anda agar dapat meningkatkan kenyamanan dan aksesibilitas fasilitas yang ada.</p>
-          <div class="mt-auto"><a href="/rpl/kategori/1<?php echo isset($_SESSION['username']) ? '?user=' . urlencode($_SESSION['username']) : ''; ?>">
+          <div class="mt-auto"><a href="/rpl/kategori1">
             <button type="submit" class="animated-button w-100">Laporkan</button>
           </a>
           </div>
@@ -54,7 +54,7 @@ $id_kategori_keluhan = isset($_GET['kategori']) ? $_GET['kategori'] : '';
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Keluhan SDA</h5>
           <p class="card-text">Bagian ini memberikan kesempatan bagi mahasiswa untuk menyampaikan pendapat mengenai pelayanan dari dosen, staf administrasi, maupun petugas kebersihan. Apakah Anda mengalami kendala dalam berinteraksi dengan pihak kampus? Atau mungkin ada saran untuk meningkatkan kualitas layanan dari sumber daya manusia? Setiap masukan akan membantu kami memastikan bahwa semua pihak di kampus berkontribusi secara optimal terhadap pengalaman mahasiswa.</p>
-          <div class="mt-auto"><a href="/rpl/kategori/2<?php echo isset($_SESSION['username']) ? '?user=' . urlencode($_SESSION['username']) : ''; ?>">
+          <div class="mt-auto"><a href="/rpl/kategori2">
             <button type="submit" class="animated-button w-100">Laporkan</button>
           </a>
           </div>
@@ -68,7 +68,7 @@ $id_kategori_keluhan = isset($_GET['kategori']) ? $_GET['kategori'] : '';
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">Keluhan KBM</h5>
           <p class="card-text">Kegiatan belajar mengajar adalah inti dari pengalaman akademis. Di sini, mahasiswa dapat memberikan masukan mengenai metode pengajaran, kurikulum, atau interaksi dengan dosen. Apakah Anda merasa kurang puas dengan materi yang diajarkan? Atau mungkin ada metode pengajaran yang perlu ditingkatkan? Umpan balik Anda sangat penting untuk menciptakan pengalaman belajar yang lebih baik dan efektif.</p>
-          <div class="mt-auto"><a href="/rpl/kategori/3<?php echo isset($_SESSION['username']) ? '?user=' . urlencode($_SESSION['username']) : ''; ?>">
+          <div class="mt-auto"><a href="/rpl/kategori3">
             <button type="submit" class="animated-button w-100">Laporkan</button>
           </a>
           </div>

@@ -14,7 +14,7 @@ if (isset($_POST['keluhanId']) && isset($_POST['response'])) {
     $stmt->bind_param("ssi", $tanggapan, $status, $id);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Tanggapan berhasil dikirim dan status diubah menjadi Selesai!'); window.location.href = 'keluhan.php';</script>";
+        echo "<script>alert('Tanggapan berhasil dikirim dan status diubah menjadi Selesai!'); window.location.href = '../admin/keluhan.php';</script>";
     } else {
         echo "<script>alert('Terjadi kesalahan, silakan coba lagi.'); window.history.back();</script>";
     }
