@@ -2,7 +2,8 @@
 session_start();
 require '../koneksi.php';
 if (!isset($_SESSION['username'])) {
-    header("Location: ../beranda"); 
+    echo "<script>alert('Anda harus login terlebih dahulu');</script>";
+    echo "<script>window.location.href = '../halaman/login.php';</script>";
     exit();
 }
 
