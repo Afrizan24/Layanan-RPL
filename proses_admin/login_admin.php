@@ -18,11 +18,10 @@ if ($result->num_rows > 0) {
     $user = $result->fetch_assoc(); // Ambil data pengguna
 
     // Periksa hashed password (Assuming password is stored using password_hash)
-    if (password_verify($password, $user['Password'])) {
+    if ($password = $user['Password']) {
         // Login successful
         $_SESSION['username'] = $username; // Store Username in session
-        $_SESSION['id_mhs'] = $user['id_mhs']; // Store User ID in session
-        
+              
         // Redirect to indexadmin.php
         header("Location: ../admin/indexadmin.php");
         exit();
