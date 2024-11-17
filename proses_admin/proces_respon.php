@@ -1,6 +1,11 @@
 <?php
-require '../koneksi.php'; 
-
+session_start();
+require '../koneksi.php';
+if (!isset($_SESSION['username'])) {
+    echo "<script>alert('Admin harus login terlebih dahulu');</script>";
+    echo "<script>window.location.href = '../admin/indexadmin.php';</script>";
+    exit();
+}
 print_r($_POST); // Debug: Menampilkan data POST untuk memastikan keluhanId terkirim
 
 // Cek apakah data terkirim

@@ -1,6 +1,11 @@
 <?php
-require '../koneksi.php';  // Pastikan koneksi ke database sudah benar
-
+session_start();
+require '../koneksi.php';
+if (!isset($_SESSION['username'])) {
+    echo "<script>alert('Admin harus login terlebih dahulu');</script>";
+    echo "<script>window.location.href = '../admin/indexadmin.php';</script>";
+    exit();
+}
 // Cek apakah id_keluhan ada di URL
 if (isset($_GET['id_keluhan'])) {
     $id_keluhan = $_GET['id_keluhan'];

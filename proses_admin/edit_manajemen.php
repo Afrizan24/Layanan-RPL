@@ -1,4 +1,11 @@
 <?php
+session_start();
+require '../koneksi.php';
+if (!isset($_SESSION['username'])) {
+    echo "<script>alert('Admin harus login terlebih dahulu');</script>";
+    echo "<script>window.location.href = '../admin/indexadmin.php';</script>";
+    exit();
+}
 require '../koneksi.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit'])) {

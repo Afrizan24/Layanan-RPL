@@ -12,20 +12,6 @@ $sql_main = "SELECT m.*, k.*, cat.*
           WHERE k.Status = 'sudah'";
 $result_main = $koneksi->query($sql_main);
 
-// Kode Pencari menampilkan kalok ingput sekaligus menampilkan hasil dari pencarian le
-if (!empty($search)) {
-                $sql_search = "SELECT m.*, k.*, cat.*
-                FROM keluhan k
-                JOIN mahasiswa m ON k.id_mhs = m.id_mhs
-                JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan
-                
-                WHERE m.Nim LIKE ? OR m.username LIKE ?";
-                        $stmt = $koneksi->prepare($sql_search);
-                        $search_param = "%" . $search . "%";
-                        $stmt->bind_param("ss", $search_param, $search_param);
-                        $stmt->execute();
-                        $result_search = $stmt->get_result();
-}
 ?>
 
 <!DOCTYPE html>
@@ -40,12 +26,7 @@ if (!empty($search)) {
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <!-- <button class="navbar-toggler" type="button" id="menu-toggle">
-                <span class="navbar-toggler-icon"></span>
-            </button> -->
-            <a class="navbar-brand" href="#">Nama</a>
-        </div>
+    
     </nav>
 
     <div class="d-flex">

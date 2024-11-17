@@ -42,12 +42,7 @@ if (!empty($search)) {
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <!-- <button class="navbar-toggler" type="button" id="menu-toggle">
-                <span class="navbar-toggler-icon"></span>
-            </button> -->
-            <a class="navbar-brand" href="#">Nama</a>
-        </div>
+   
     </nav>
 
     <div class="d-flex">
