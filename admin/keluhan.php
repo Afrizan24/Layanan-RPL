@@ -5,21 +5,22 @@ require '../koneksi.php';
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 //menampilkan tabel databse tetap le
-$sql_main = "SELECT m.*, k.*, cat.*
+$sql_main = "SELECT m.*, k.*, cat. * ,k.gambar
           FROM keluhan k
           JOIN mahasiswa m ON k.id_mhs = m.id_mhs
           JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan
           where k.Status = 'proses'";
+
 $result_main = $koneksi->query($sql_main);
 
 // Kode Pencari menampilkan kalok ingput sekaligus menampilkan hasil dari pencarian le
 if (!empty($search)) {
-                $sql_search = "SELECT m.*, k.*, cat.*
+                $sql_search = "SELECT m.*, k.*, cat. * ,k.gambar
                 FROM keluhan k
                 JOIN mahasiswa m ON k.id_mhs = m.id_mhs
                 JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan
                 
-                WHERE m.Nim LIKE ? OR m.username LIKE ?";
+                WHERE m.Nim LIKE ? OR m.username LIKE ?";   
                         $stmt = $koneksi->prepare($sql_search);
                         $search_param = "%" . $search . "%";
                         $stmt->bind_param("ss", $search_param, $search_param);
@@ -42,7 +43,6 @@ if (!empty($search)) {
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-dark">
-   
     </nav>
 
     <div class="d-flex">
@@ -53,134 +53,119 @@ if (!empty($search)) {
             <a href="manajemen.php" class="nav-link">Manajemen Mahasiswa</a>
             <a href="keluhan.php" class="nav-link">Daftar Keluhan</a>
             <a href="respon.php" class="nav-link">Respon</a>
-            <a href="logout.php" class="nav-link">Logout</a>
+            <a href="../proses_admin/logout.php" class="nav-link">Logout</a>
         </div>
+    </div>
 
-        <!-- Main Content -->
-        <div class="content container my-5">
-            <h2>Manajemen Keluhan</h2>
-            <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>NIM</th>
-                    <th>Nama</th>
-                    <th>Kategori Keluhan</th>
-                    <th>Deskripsi</th>
-                    <th>Lokasi</th>
-                    <th>Status</th>
-                    <th>Tanggapan</th>
-                    <th>Waktu</th>
-                    <th>gambar</th>
-                </tr>
-            </thead>
-            <!-- result main untuk tabel tetap le  -->
-                <?php $i = 1; ?>
-                  <?php if ($result_main && $result_main->num_rows > 0): ?>
-                      <?php while ($o = $result_main->fetch_assoc()): ?>
-                          <tr>
-                              <td><?= $i; ?></td>
-                              <td><?= $o["Nim"]; ?></td>
-                              <td><?= $o["username"]; ?></td>
-                              <td><?= $o["nama_kategori"]; ?></td>
-                              <td><?= $o["deskripsi"]; ?></td>
-                              <td><?= $o["lokasi"]; ?></td>
-                              <td><?= $o["status"]; ?></td>
-                              <td>
-                              <a href="#" class="btn btn-primary btn-sm setujui-btn" data-id="<?= $o['id_keluhan']; ?>" data-bs-toggle="modal" data-bs-target="#editModal">Setujui</a>
-                              <a href="hapus_keluhan.php?id_keluhan=<?= $o['id_keluhan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tolak Keluhan Mahasiswa')">Tolak</a>
-                              </td>
-                              <td><?= $o["tgl_keluhan"]; ?></td>
-                              <td>
+
+    <!-- Main Content -->
+   <!-- Main Content -->
+<div class="content container my-5">
+    <h2>Manajemen Keluhan</h2>
+
+    <!-- Form pencarian -->
+    <form action="" method="GET" class="mb-3">
+        <label for="search" class="form-label">Cari Yang Mengeluh</label>
+        <input type="text" class="form-control" id="search" name="search" placeholder="Masukkan NIM atau Username" required autocomplete="off" value="<?= htmlspecialchars($search ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+        <button type="submit" class="btn btn-primary mt-2">Cari</button>
+    </form>
+
+    <!-- Kontainer Tabel -->
+    <div id="table-container" class="overflow-auto" style="max-height: 500px;">
+
+        <?php 
+        $data = !empty($search) ? $result_search : $result_main; 
+
+
+        // sebagai tombol navigasi
+        if (!empty($data) && $data->num_rows > 0):
+            $perPage = 6; // Jumlah data per halaman
+            $totalData = $data->num_rows;
+            $totalPages = ceil($totalData / $perPage);
+            $i = 1;
+            for ($page = 1; $page <= $totalPages; $page++): ?>
+                <div class="table-page overflow-auto" data-page="<?= $page; ?>" style="min-width: 100%; display: <?= $page === 1 ? 'block' : 'none'; ?>;">
+
+                    <table class="table table-striped overflow-auto">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>NIM</th>
+                                <th>Nama</th>
+                                <th>Kategori Keluhan</th>
+                                <th>Deskripsi</th>
+                                <th>Lokasi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                                <th>Waktu</th>
+                                <th>Gambar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            $counter = 0;
+                            $data->data_seek(0);
+                            while ($o = $data->fetch_assoc()):
+                                if ($counter >= ($page - 1) * $perPage && $counter < $page * $perPage): ?>
+                                    <tr>
+                                        <td><?= $i++; ?></td>
+                                        <td><?= htmlspecialchars($o["Nim"]); ?></td>
+                                        <td><?= htmlspecialchars($o["username"]); ?></td>
+                                        <td><?= htmlspecialchars($o["nama_kategori"]); ?></td>
+                                        <td><?= htmlspecialchars($o["deskripsi"]); ?></td>
+                                        <td><?= htmlspecialchars($o["lokasi"]); ?></td>
+                                        <td><?= htmlspecialchars($o["status"]); ?></td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary btn-sm setujui-btn" data-id="<?= htmlspecialchars($o['id_keluhan']); ?>" data-bs-toggle="modal" data-bs-target="#editModal">Setujui</a>
+                                            <a href="../proses_admin/hapus_keluhan.php?id_keluhan=<?= htmlspecialchars($o['id_keluhan']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Tolak</a>
+                                        </td>
+                                        <td><?= htmlspecialchars($o["tgl_keluhan"]); ?></td>
+                                        <td>
                                 <?php
                                   if ($o["gambar"]){
-                                    echo '<img src="../src/img' . htmlspecialchars($o["gambar"], ENT_QUOTES, 'UTF-8') . '" alt="Gambar Keluhan" style="width:100px; height:auto;">';
+                                        echo '<img src="../src/img' . htmlspecialchars($o["gambar"], ENT_QUOTES, 'UTF-8') . '" alt="Gambar Keluhan" style="width:100px; height:auto;">';
                                   }else{
-                                    echo 'gambar tidak ada';
-                                  }
+                                        echo 'gambar tidak ada';
+                                      }
                                 ?>
-                                </td>
-
-                      </tr>
-                      <?php $i++; ?>
-                  <?php endwhile; ?>
-              <?php else: ?>
-                  <tr>
-                      <td colspan="10">No data found</td>
-                  </tr>
-              <?php endif; ?>
-            </tbody>
-        </table>
-
-        <div class="mb-3">
-          <form action="" method="GET">
-            <label for="search" class="form-label">Cari Yang Mengeluh</label>
-            <input type="text" class="form-control" id="search" name="search" placeholder="Masukkan NIM atau Username" required autocomplete="off" value="<?php echo htmlspecialchars($search); ?>">
-            <button type="submit" class="btn btn-primary mt-2">Cari</button>  
-          </div>
-        </form>
-
-      <!-- result_search untuk hasil pencarian le  -->
-      <?php if (!empty($search)): ?>
-      <h2>Hasil Pencarian untuk: "<?= htmlspecialchars($search); ?>"</h2>
-      <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>NIM</th>
-                <th>Nama</th>
-                <th>Kategori Keluhan</th>
-                <th>Deskripsi</th>
-                <th>Lokasi</th>
-                <th>Status</th>
-                <th>Tanggapan</th>
-                <th>Waktu</th>
-                <th>Gambar</th>
-            </tr>
-        </thead>
-            <?php $i = 1; ?>
-              <?php if ($result_search && $result_search->num_rows > 0): ?>
-                  <?php while ($o = $result_search->fetch_assoc()): ?>
-                      <tr>
-                          <td><?= $i; ?></td>
-                          <td><?= $o["Nim"]; ?></td>
-                          <td><?= $o["username"]; ?></td>
-                          <td><?= $o["nama_kategori"]; ?></td>
-                          <td><?= $o["deskripsi"]; ?></td>
-                          <td><?= $o["lokasi"]; ?></td>
-                          <td><?= $o["status"]; ?></td>
-                          <td>
-                              <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Setujui</a>
-                              <a href="hapus_keluhan.php?id_keluhan=<?= $o['id_keluhan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Tolak</a>
-                          </td>
-                          <td><?= $o["tgl_keluhan"]; ?></td>
-                          <td>
-                            <?php
-                              if ($o["gambar"]){
-                                echo '<img src="../src/img' . htmlspecialchars($o["gambar"], ENT_QUOTES, 'UTF-8') . '" alt="Gambar Keluhan" style="width:100px; height:auto;">';
-                              }else{
-                                echo 'gambar tidak ada';
-                              }
-                            ?>  
-                            </td>
-                        
-                        
-                      </tr>
-                      <?php $i++; ?>
-                  <?php endwhile; ?>
-              <?php else: ?>
-                  <tr>
-                      <td colspan="10">No data found</td>
-                  </tr>
-              <?php endif; ?>
-            </tbody>
-            
-        </table>
-            <?php elseif ($search): ?>
-                <p>Data tidak ditemukan untuk pencarian "<?php echo htmlspecialchars($search); ?>"</p>
-            <?php endif; ?>
-            
+                                        </td>
+                                    </tr>
+                                <?php endif; 
+                                $counter++;
+                            endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endfor;
+        else: ?>
+            <p class="text-center">
+                <?= !empty($search) 
+                    ? "Tidak Ada Mahasiswa Yang Mengeluh Dalam Pencarian \"" . htmlspecialchars($search) . "\" " 
+                    : "Tidak ada data ditemukan."; ?>
+            </p>
+        <?php endif; ?>
     </div>
+
+    <!-- Navigasi Halaman -->
+    <div class="pagination mt-3 d-flex justify-content-center gap-2">
+    <?php if (!empty($data) && $data->num_rows > 0): ?>
+            <?php for ($page = 1; $page <= $totalPages; $page++): ?>
+        <button class="btn btn-secondary page-button" data-page="<?= $page; ?>"><?= $page; ?>
+        </button>
+            <?php endfor; ?>
+    <?php else: ?>
+        <p class="text-center">Data tidak ditemukan untuk pencarian "<?php echo htmlspecialchars($search); ?>"</p>
+    <?php endif; ?>
+</div>
+
+</div>
+
+
+
+
+
+
+
 
 
  <!-- //modal Edit// -->
@@ -221,8 +206,25 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
 </script>
 
+<!-- button sebagai navigasi -->
+<script>
+document.querySelectorAll('.page-button').forEach(button => {
+    button.addEventListener('click', () => {
+        const page = button.getAttribute('data-page');
+        document.querySelectorAll('.table-page').forEach(pageDiv => {
+            if (pageDiv.getAttribute('data-page') === page) {
+                pageDiv.style.display = 'block';
+            } else {
+                pageDiv.style.display = 'none';
+            }
+        });
+    });
+});
+
+</script>
 
 
 

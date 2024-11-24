@@ -1,21 +1,22 @@
 <?php
-// Ambil kategori dari URL
-
 require './koneksi.php';
-$username = isset($_SESSION['username']) ? $_SESSION['username'] : ''; // Ambil username dari session
-$id_kategori_keluhan = isset($_GET['kategori']) ? $_GET['kategori'] : '';
+// Ambil username dan NIM dari session
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+$nim = isset($_SESSION['Nim']) ? $_SESSION['Nim'] : ''; // Pastikan NIM juga diambil dari session
+$id_kategori_keluhan = isset($_POST['id_kategori_keluhan']) ? $_POST['id_kategori_keluhan'] : '';
 
-// Query untuk menampilkan data keluhan, mahasiswa, dan kategori_keluhan
+
+// Query untuk menampilkan data keluhan hanya untuk pengguna dengan username dan NIM yang cocok
 $sql_main = "SELECT m.NIM AS nim, m.username AS nama, k.deskripsi, k.lokasi, k.status, k.tanggapan, k.tgl_keluhan, 
                     cat.nama_kategori AS kategori
              FROM keluhan k
              JOIN mahasiswa m ON k.id_mhs = m.id_mhs
              JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan
-             WHERE m.username = ?"; // Tambahkan kondisi WHERE
+             WHERE m.username = ? AND m.NIM = ?";
 
 // Siapkan pernyataan
 $stmt = $koneksi->prepare($sql_main);
-$stmt->bind_param("s", $username); // Bind parameter username
+$stmt->bind_param("ss", $username, $nim); // Bind parameter username dan NIM
 $stmt->execute();
 $result_main = $stmt->get_result();
 
@@ -114,12 +115,12 @@ $result_main = $stmt->get_result();
                 <img src="src\img\LogoTI.png" alt="Side Image" style="width: 550px;"> 
             </div>
 
+
 <!-- Main Content -->
 <div class="content container my-5">
-    <?php
-    if (!isset($_SESSION['username'])) {
-    } else {
-    ?>
+    <?php if (!isset($_SESSION['username']) || !isset($_SESSION['Nim'])): ?>
+        <p>Anda harus login untuk melihat data keluhan Anda.</p>
+    <?php else: ?>
         <h2>Keluhan Anda</h2>
         <div class="table-responsive"> <!-- Menambahkan class table-responsive -->
             <table class="table table-striped">
@@ -142,26 +143,26 @@ $result_main = $stmt->get_result();
                         <?php while ($o = $result_main->fetch_assoc()): ?>
                             <tr>
                                 <td><?= $i; ?></td>
-                                <td><?= $o["nim"]; ?></td>
-                                <td><?= $o["nama"]; ?></td>
-                                <td><?= $o["kategori"]; ?></td>
-                                <td><?= $o["deskripsi"]; ?></td>
-                                <td><?= $o["lokasi"]; ?></td>
-                                <td><?= $o["status"]; ?></td>
-                                <td><?= $o["tanggapan"]; ?></td>
-                                <td><?= $o["tgl_keluhan"]; ?></td>
+                                <td><?= htmlspecialchars($o["nim"]); ?></td>
+                                <td><?= htmlspecialchars($o["nama"]); ?></td>
+                                <td><?= htmlspecialchars($o["kategori"]); ?></td>
+                                <td><?= htmlspecialchars($o["deskripsi"]); ?></td>
+                                <td><?= htmlspecialchars($o["lokasi"]); ?></td>
+                                <td><?= htmlspecialchars($o["status"]); ?></td>
+                                <td><?= htmlspecialchars($o["tanggapan"]); ?></td>
+                                <td><?= htmlspecialchars($o["tgl_keluhan"]); ?></td>
                             </tr>
                             <?php $i++; ?>
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="10">No data found</td>
+                            <td colspan="9">Tidak ada keluhan yang ditemukan.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
         </div> <!-- Menutup div.table-responsive -->
-    <?php } // Tutup else ?>
+    <?php endif; ?>
 </div>
 
 

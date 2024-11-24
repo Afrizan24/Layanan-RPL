@@ -1,33 +1,30 @@
-<?php 
+<?php
 require '../koneksi.php'; 
 
-// Untuk menampilkan Isi
-$search = ''; // Untuk input pencarian
-$query = "SELECT Nim, username, password FROM mahasiswa"; // Query default
-$result = mysqli_query($koneksi, $query);
+// Variabel untuk menampung input pencarian dan hasilnya
+$search = ''; 
+$search_result = null;
 
-$search_result = null; 
+// Query default untuk mengambil semua data
+$query = "SELECT Nim, username, password FROM mahasiswa";
+$result_main = mysqli_query($koneksi, $query);
 
+// Cek jika form pencarian disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
-    $search = trim($_POST['search']); // Mengambil dan membersihkan input pencarian
+    $search = trim($_POST['search']); // Ambil input pencarian
 
     if ($search) {
-        
-        $query = "SELECT * FROM mahasiswa WHERE Nim = ? OR username = ?";
-        
+        // Query untuk pencarian, hanya mengambil satu hasil
+        $query = "SELECT * FROM mahasiswa WHERE Nim = ? OR username = ? LIMIT 1";
+
         // Mempersiapkan statement SQL
         $stmt = mysqli_prepare($koneksi, $query);
         if ($stmt) {
             mysqli_stmt_bind_param($stmt, 'ss', $search, $search); 
             mysqli_stmt_execute($stmt);
-            $search_result = mysqli_stmt_get_result($stmt); 
-
-            
-            if (!$search_result) {
-                die("Query pencarian gagal: " . mysqli_error($koneksi));
-            }
+            $search_result = mysqli_stmt_get_result($stmt); // Ambil hasil pencarian
         } else {
-            die("Query gagal: " . mysqli_error($koneksi));
+            die("Query pencarian gagal: " . mysqli_error($koneksi));
         }
     }
 }
@@ -44,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-dark">
        
@@ -58,52 +55,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
             <a href="manajemen.php" class="nav-link">Manajemen Mahasiswa</a>
             <a href="keluhan.php" class="nav-link">Daftar Keluhan</a>
             <a href="respon.php" class="nav-link">Respon</a>
-            <a href="logout.php" class="nav-link">Logout</a>
+            <a href="../proses_admin/logout.php" class="nav-link">Logout</a>
         </div>
 
-        <!-- Main Content -->
-        <div class="content container my-5">
-            <h2>Manajemen Mahasiswa</h2>
-    <!-- Tabel untuk menampilkan semua data mahasiswa -->
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>NIM</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            $no = 1;
-            // Pastikan $result valid sebelum melakukan fetch data
-            if ($result && mysqli_num_rows($result) > 0) {
-                while ($mhs = mysqli_fetch_assoc($result)) : ?>
-                    <tr>
-                        <td><?php echo $no++; ?></td>
-                        <td><?php echo htmlspecialchars($mhs['Nim']); ?></td>
-                        <td><?php echo htmlspecialchars($mhs['username']); ?></td>
-                        <td><?php echo htmlspecialchars($mhs['password']); ?></td>
-                        <td>
-    <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>" data-username="<?php echo htmlspecialchars($mhs['username']); ?>">Edit</a>
-    <a href="../proses_admin/hapus_manajemen.php?Nim=<?php echo htmlspecialchars($mhs['Nim']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
-</td>
 
-                    </tr>
-                <?php endwhile; 
-            } else { ?>
-                <tr>
-                    <td colspan="5">Data tidak ditemukan.</td>
-                </tr>
-            <?php } ?>
-        </tbody>
-    </table>
 
-            
-            <!-- nyari mahasiswa -->
-        <form action="" method="POST">    
+<!-- Main Content -->
+<div class="content container my-5">
+    <h2>Manajemen Mahasiswa</h2>
+
+    <!-- Form pencarian -->
+    <form action="" method="POST">    
         <div class="mb-3">
             <label for="search" class="form-label">Cari Mahasiswa</label>
             <input type="text" class="form-control" id="search" name="search" placeholder="Masukkan NIM atau Username" required autocomplete="off" value="<?php echo htmlspecialchars($search); ?>">
@@ -111,9 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
         </div>
     </form>
 
-    <!-- Hasil Pencarian -->
-    <?php if ($search_result && mysqli_num_rows($search_result) > 0): ?>
-        <h3>Hasil Pencarian untuk "<?php echo htmlspecialchars($search); ?>"</h3>
+    <!-- Tabel untuk menampilkan data mahasiswa -->
+    <div id="table-container" class="overflow-auto">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -126,74 +87,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
             </thead>
             <tbody>
                 <?php
-                $no = 1;
-                // Loop untuk menampilkan data hasil pencarian
-                while ($mhs = mysqli_fetch_assoc($search_result)) : ?>
+                // Tentukan data yang akan ditampilkan: hasil pencarian atau data utama
+                if (!empty($search_result) && mysqli_num_rows($search_result) > 0): 
+                    // Jika pencarian dilakukan, tampilkan hanya satu data
+                    $i = 1;
+                    while ($mhs = mysqli_fetch_assoc($search_result)):
+                ?>
                     <tr>
-                        <td><?php echo $no++; ?></td>
+                        <td><?php echo $i++; ?></td>
                         <td><?php echo htmlspecialchars($mhs['Nim']); ?></td>
                         <td><?php echo htmlspecialchars($mhs['username']); ?></td>
                         <td><?php echo htmlspecialchars($mhs['password']); ?></td>
                         <td>
-                        <td>
-    <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>" data-username="<?php echo htmlspecialchars($mhs['username']); ?>">Edit</a>
-    <a href="../proses_admin/hapus_manajemen.php?Nim=<?php echo htmlspecialchars($mhs['Nim']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
-</td>
-
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>" data-username="<?php echo htmlspecialchars($mhs['username']); ?>">Edit</a>
+                            <a href="../proses_admin/hapus_manajemen.php?Nim=<?php echo htmlspecialchars($mhs['Nim']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
                         </td>
                     </tr>
-                <?php endwhile; ?>
+                <?php
+                    endwhile;
+                elseif (!empty($result_main) && mysqli_num_rows($result_main) > 0):
+                    // Jika tidak ada pencarian, gunakan data utama dengan paginasi
+                    $perPage = 6; // Jumlah data per halaman
+                    $totalData = mysqli_num_rows($result_main);
+                    $totalPages = ceil($totalData / $perPage);
+                    $i = 1;
+
+                    // Pagination logic
+                    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                    $offset = ($page - 1) * $perPage;
+                    $data_paginated = mysqli_query($koneksi, "SELECT * FROM mahasiswa LIMIT $offset, $perPage");
+
+                    while ($mhs = mysqli_fetch_assoc($data_paginated)):
+                ?>
+                    <tr>
+                        <td><?php echo $i++; ?></td>
+                        <td><?php echo htmlspecialchars($mhs['Nim']); ?></td>
+                        <td><?php echo htmlspecialchars($mhs['username']); ?></td>
+                        <td><?php echo htmlspecialchars($mhs['password']); ?></td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-nim="<?php echo htmlspecialchars($mhs['Nim']); ?>" data-username="<?php echo htmlspecialchars($mhs['username']); ?>">Edit</a>
+                            <a href="../proses_admin/hapus_manajemen.php?Nim=<?php echo htmlspecialchars($mhs['Nim']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
+                        </td>
+                    </tr>
+                <?php
+                    endwhile;
+                else:
+                ?>
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <?= !empty($search) ? "Tidak ada data ditemukan untuk pencarian \"" . htmlspecialchars($search) . "\"" : "Tidak ada data ditemukan."; ?>
+                        </td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
-    <?php elseif ($search): ?>
-        <p>Data tidak ditemukan untuk pencarian "<?php echo htmlspecialchars($search); ?>"</p>
-    <?php endif; ?>
-</div>
-           
-</div>
-        </div>
     </div>
 
-<!-- Modal Edit -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="../proses_admin/edit_manajemen.php" method="POST">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Mahasiswa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Hidden field to store the original Nim -->
-                    <input type="hidden" id="original-nim" name="original_nim">
-                    
-                    <div class="mb-3">
-                        <label for="edit-nim" class="form-label">Nim</label>
-                        <input type="text" class="form-control" id="edit-nim" name="nim" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="edit-username" name="username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="edit-password" name="password" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" name="edit" class="btn btn-primary">Simpan Perubahan</button>
-                </div>
-            </form>
+    <!-- Navigasi Halaman untuk Data Utama -->
+    <?php if (empty($search_result) && mysqli_num_rows($result_main) > 0): ?>
+        <div class="pagination mt-3 d-flex justify-content-center gap-2">
+            <?php for ($page = 1; $page <= $totalPages; $page++): ?>
+                <a href="?page=<?= $page; ?>" class="btn btn-secondary <?= isset($_GET['page']) && (int)$_GET['page'] === $page ? 'active' : ''; ?>"><?= $page; ?></a>
+            <?php endfor; ?>
         </div>
-    </div>
+    <?php endif; ?>
 </div>
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
     const editButtons = document.querySelectorAll(".btn-primary[data-bs-target='#editModal']");
-
     editButtons.forEach(button => {
         button.addEventListener("click", function () {
             const nim = button.getAttribute("data-nim");
@@ -207,12 +173,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
         });
     });
 });
-
         // Toggle sidebar visibility
         document.getElementById("menu-toggle").addEventListener("click", function () {
             document.querySelector(".sidebar").classList.toggle("active");
             document.querySelector(".content").classList.toggle("active");
         });
     </script>
+
+<script>
+// Tombol navigasi untuk pindah antar halaman
+document.querySelectorAll('.page-button').forEach(button => {
+    button.addEventListener('click', () => {
+        const page = button.getAttribute('data-page');
+        document.querySelectorAll('.table-page').forEach(pageDiv => {
+            if (pageDiv.getAttribute('data-page') === page) {
+                pageDiv.style.display = 'block';
+            } else {
+                pageDiv.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
