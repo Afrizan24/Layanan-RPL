@@ -4,31 +4,31 @@ require '../koneksi.php';
 // Cek apakah ada input pencarian
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-//menampilkan tabel databse tetap le
-$sql_main = "SELECT m.*, k.*, cat. * ,k.gambar
-          FROM keluhan k
-          JOIN mahasiswa m ON k.id_mhs = m.id_mhs
-          JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan
-          where k.Status = 'proses'";
+// Menampilkan tabel database tetap
+$sql_main = "SELECT m.*, k.*, cat.*, k.gambar
+             FROM keluhan k
+             JOIN mahasiswa m ON k.id_mhs = m.id_mhs
+             JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan
+             WHERE k.Status = 'proses'";
 
 $result_main = $koneksi->query($sql_main);
 
-// Kode Pencari menampilkan kalok ingput sekaligus menampilkan hasil dari pencarian le
+// Kode pencarian
 if (!empty($search)) {
-                $sql_search = "SELECT m.*, k.*, cat. * ,k.gambar
-                FROM keluhan k
-                JOIN mahasiswa m ON k.id_mhs = m.id_mhs
-                JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan
-                
-                WHERE m.Nim LIKE ? OR m.username LIKE ?";   
-                        $stmt = $koneksi->prepare($sql_search);
-                        $search_param = "%" . $search . "%";
-                        $stmt->bind_param("ss", $search_param, $search_param);
-                        $stmt->execute();
-                        $result_search = $stmt->get_result();
+    $sql_search = "SELECT m.*, k.*, cat.*, k.gambar
+                   FROM keluhan k
+                   JOIN mahasiswa m ON k.id_mhs = m.id_mhs
+                   JOIN kategori_keluhan cat ON k.id_kategori_keluhan = cat.id_kategori_keluhan
+                   WHERE (m.Nim LIKE ? OR m.username LIKE ?) AND k.Status = 'proses'"; // Tambahkan filter status di sini
+    
+    $stmt = $koneksi->prepare($sql_search);
+    $search_param = "%" . $search . "%";
+    $stmt->bind_param("ss", $search_param, $search_param);
+    $stmt->execute();
+    $result_search = $stmt->get_result();
 }
-
 ?>
+
 
 
 <!DOCTYPE html>
@@ -69,6 +69,12 @@ if (!empty($search)) {
         <input type="text" class="form-control" id="search" name="search" placeholder="Masukkan NIM atau Username" required autocomplete="off" value="<?= htmlspecialchars($search ?? '', ENT_QUOTES, 'UTF-8'); ?>">
         <button type="submit" class="btn btn-primary mt-2">Cari</button>
     </form>
+
+        <!-- Tombol Kembali Jika Pencarian -->
+    <?php if (!empty($search)): ?>
+        <a href="?" class="btn btn-secondary mb-3">Kembali</a>
+    <?php endif; ?>
+
 
     <!-- Kontainer Tabel -->
     <div id="table-container" class="overflow-auto" style="max-height: 500px;">

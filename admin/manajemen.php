@@ -73,6 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
         </div>
     </form>
 
+    <?php if (!empty($search)): ?>
+        <a href="?" class="btn btn-secondary mb-3">Kembali</a>
+    <?php endif; ?>
+
     <!-- Tabel untuk menampilkan data mahasiswa -->
     <div id="table-container" class="overflow-auto">
         <table class="table table-striped">
