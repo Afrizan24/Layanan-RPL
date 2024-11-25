@@ -1,7 +1,13 @@
 <?php 
 require '../koneksi.php';
 
+session_start();
+if (isset($_SESSION['error'])) {
+    echo "<script>alert('" . $_SESSION['error'] . "');</script>";
+    unset($_SESSION['error']); // Hapus error setelah ditampilkan
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +23,16 @@ require '../koneksi.php';
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid"  >
-            <a class="navbar-brand" data-bs-toggle="modal" data-bs-target="#editModal"  href="#">Login</a>
+           
+        <?php
+                       if (isset($_SESSION['username'])) {
+                          
+                       } else {
+                           echo '<span class="navbar-text"><a href="halaman/login.php">
+              <button type="submit" class="animated-button"> Log-In </button>
+            </a>';
+                       }
+                       ?>
         </div>
     </nav>
 
